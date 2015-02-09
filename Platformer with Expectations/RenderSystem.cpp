@@ -1,11 +1,12 @@
 #include "RenderSystem.hpp"
 
-
-RenderSystem::RenderSystem()
-{
+void RenderSystem::configure(EventManager & event){
 }
 
 
-RenderSystem::~RenderSystem()
-{
+void RenderSystem::update(EntityManager & entities, EventManager & events, double dt){
+	for (Entity ent : entities.withComponents<Renderable>()){
+		Renderable::Handle & render = ent.getComponent<Renderable>();
+		target.draw(render->shape);
+	}
 }

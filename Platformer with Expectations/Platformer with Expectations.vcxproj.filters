@@ -76,6 +76,9 @@
     <ClCompile Include="MovementSystem.cpp">
       <Filter>Game\System</Filter>
     </ClCompile>
+    <ClCompile Include="EntityFactory.cpp">
+      <Filter>Game\Util\Factory</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TheGrid\Analytics.hpp">
@@ -155,6 +158,24 @@
     </ClInclude>
     <ClInclude Include="Systems.hpp">
       <Filter>Game\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Movable.hpp">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderable.hpp">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Colidable.hpp">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Controlable.hpp">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityFactory.hpp">
+      <Filter>Game\Util\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="Components.hpp">
+      <Filter>Game\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

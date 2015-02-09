@@ -1,9 +1,11 @@
 #include "Game.hpp"
 #include "Systems.hpp"
+#include "EntityFactory.hpp"
 
 Game::Game() :  systemManager(entityManager, eventManager)
 {
 	an = Analytics::get(entityManager, systemManager, eventManager);
+	EntityFactory::get(entityManager)->CreatePlayer(sf::Vector2f(100,100));
 }
 
 
@@ -36,12 +38,13 @@ void Game::run(){
 
 void Game::initialize(sf::RenderTarget & target){
 	systemManager.addSystem<ControlSystem>();
-
+	systemManager.addSystem<RenderSystem>(target);
 	systemManager.configure();
 }
 
 void Game::update(double dt){
 	systemManager.update<ControlSystem>(dt);
+	systemManager.update<RenderSystem>(dt);
 	an->log();
 }
 
