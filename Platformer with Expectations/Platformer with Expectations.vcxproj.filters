@@ -1,17 +1,160 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="TheGrid">
+      <UniqueIdentifier>{c1bb4b0f-5292-44c7-94d4-840a5d2a5286}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{5c76b8a4-4225-4bc8-ab25-ac1ea030e530}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Components">
+      <UniqueIdentifier>{1e4c523e-1645-4111-a00e-a199ae1bb83b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\System">
+      <UniqueIdentifier>{cd685041-141c-4f9f-860b-660dd28ce280}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Events">
+      <UniqueIdentifier>{04eafde6-7504-4781-85c7-7673f2ae1064}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Util">
+      <UniqueIdentifier>{3c491f1d-85fa-436e-a013-0a611c16bcd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Util\Factory">
+      <UniqueIdentifier>{633e1fb4-6fb3-4196-be75-b667d4b5daed}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="TheGrid\Analytics.cpp">
+      <Filter>TheGrid</Filter>
+    </ClCompile>
+    <ClCompile Include="TheGrid\BaseComponent.cpp">
+      <Filter>TheGrid</Filter>
+    </ClCompile>
+    <ClCompile Include="TheGrid\BaseEvent.cpp">
+      <Filter>TheGrid</Filter>
+    </ClCompile>
+    <ClCompile Include="TheGrid\BasePool.cpp">
+      <Filter>TheGrid</Filter>
+    </ClCompile>
+    <ClCompile Include="TheGrid\BaseSystem.cpp">
+      <Filter>TheGrid</Filter>
+    </ClCompile>
+    <ClCompile Include="TheGrid\Entity.cpp">
+      <Filter>TheGrid</Filter>
+    </ClCompile>
+    <ClCompile Include="TheGrid\EntityManager.cpp">
+      <Filter>TheGrid</Filter>
+    </ClCompile>
+    <ClCompile Include="TheGrid\EventManager.cpp">
+      <Filter>TheGrid</Filter>
+    </ClCompile>
+    <ClCompile Include="TheGrid\SystemManager.cpp">
+      <Filter>TheGrid</Filter>
+    </ClCompile>
+    <ClCompile Include="TheGrid\test.cpp">
+      <Filter>TheGrid</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderSystem.cpp">
+      <Filter>Game\System</Filter>
+    </ClCompile>
+    <ClCompile Include="ControlSystem.cpp">
+      <Filter>Game\System</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionSystem.cpp">
+      <Filter>Game\System</Filter>
+    </ClCompile>
+    <ClCompile Include="MovementSystem.cpp">
+      <Filter>Game\System</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="TheGrid\Analytics.hpp">
+      <Filter>TheGrid</Filter>
+    </ClInclude>
+    <ClInclude Include="TheGrid\AnalyticsException.h">
+      <Filter>TheGrid</Filter>
+    </ClInclude>
+    <ClInclude Include="TheGrid\BaseComponent.hpp">
+      <Filter>TheGrid</Filter>
+    </ClInclude>
+    <ClInclude Include="TheGrid\BaseEvent.hpp">
+      <Filter>TheGrid</Filter>
+    </ClInclude>
+    <ClInclude Include="TheGrid\BasePool.hpp">
+      <Filter>TheGrid</Filter>
+    </ClInclude>
+    <ClInclude Include="TheGrid\BaseReceiver.hpp">
+      <Filter>TheGrid</Filter>
+    </ClInclude>
+    <ClInclude Include="TheGrid\BaseSystem.hpp">
+      <Filter>TheGrid</Filter>
+    </ClInclude>
+    <ClInclude Include="TheGrid\Component.hpp">
+      <Filter>TheGrid</Filter>
+    </ClInclude>
+    <ClInclude Include="TheGrid\ComponentHandle.hpp">
+      <Filter>TheGrid</Filter>
+    </ClInclude>
+    <ClInclude Include="TheGrid\Entity.hpp">
+      <Filter>TheGrid</Filter>
+    </ClInclude>
+    <ClInclude Include="TheGrid\EntityId.hpp">
+      <Filter>TheGrid</Filter>
+    </ClInclude>
+    <ClInclude Include="TheGrid\EntityManager.hpp">
+      <Filter>TheGrid</Filter>
+    </ClInclude>
+    <ClInclude Include="TheGrid\Event.hpp">
+      <Filter>TheGrid</Filter>
+    </ClInclude>
+    <ClInclude Include="TheGrid\EventManager.hpp">
+      <Filter>TheGrid</Filter>
+    </ClInclude>
+    <ClInclude Include="TheGrid\NonCopyable.hpp">
+      <Filter>TheGrid</Filter>
+    </ClInclude>
+    <ClInclude Include="TheGrid\Pool.hpp">
+      <Filter>TheGrid</Filter>
+    </ClInclude>
+    <ClInclude Include="TheGrid\Receiver.hpp">
+      <Filter>TheGrid</Filter>
+    </ClInclude>
+    <ClInclude Include="TheGrid\SimpleSignal.hpp">
+      <Filter>TheGrid</Filter>
+    </ClInclude>
+    <ClInclude Include="TheGrid\System.hpp">
+      <Filter>TheGrid</Filter>
+    </ClInclude>
+    <ClInclude Include="TheGrid\SystemManager.hpp">
+      <Filter>TheGrid</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.hpp">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderSystem.hpp">
+      <Filter>Game\System</Filter>
+    </ClInclude>
+    <ClInclude Include="ControlSystem.hpp">
+      <Filter>Game\System</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionSystem.hpp">
+      <Filter>Game\System</Filter>
+    </ClInclude>
+    <ClInclude Include="MovementSystem.hpp">
+      <Filter>Game\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems.hpp">
+      <Filter>Game\System</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

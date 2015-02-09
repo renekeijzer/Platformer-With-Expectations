@@ -10,6 +10,52 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CollisionSystem.cpp" />
+    <ClCompile Include="ControlSystem.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MovementSystem.cpp" />
+    <ClCompile Include="RenderSystem.cpp" />
+    <ClCompile Include="TheGrid\Analytics.cpp" />
+    <ClCompile Include="TheGrid\BaseComponent.cpp" />
+    <ClCompile Include="TheGrid\BaseEvent.cpp" />
+    <ClCompile Include="TheGrid\BasePool.cpp" />
+    <ClCompile Include="TheGrid\BaseSystem.cpp" />
+    <ClCompile Include="TheGrid\Entity.cpp" />
+    <ClCompile Include="TheGrid\EntityManager.cpp" />
+    <ClCompile Include="TheGrid\EventManager.cpp" />
+    <ClCompile Include="TheGrid\SystemManager.cpp" />
+    <ClCompile Include="TheGrid\test.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CollisionSystem.hpp" />
+    <ClInclude Include="ControlSystem.hpp" />
+    <ClInclude Include="Game.hpp" />
+    <ClInclude Include="MovementSystem.hpp" />
+    <ClInclude Include="RenderSystem.hpp" />
+    <ClInclude Include="Systems.hpp" />
+    <ClInclude Include="TheGrid\Analytics.hpp" />
+    <ClInclude Include="TheGrid\AnalyticsException.h" />
+    <ClInclude Include="TheGrid\BaseComponent.hpp" />
+    <ClInclude Include="TheGrid\BaseEvent.hpp" />
+    <ClInclude Include="TheGrid\BasePool.hpp" />
+    <ClInclude Include="TheGrid\BaseReceiver.hpp" />
+    <ClInclude Include="TheGrid\BaseSystem.hpp" />
+    <ClInclude Include="TheGrid\Component.hpp" />
+    <ClInclude Include="TheGrid\ComponentHandle.hpp" />
+    <ClInclude Include="TheGrid\Entity.hpp" />
+    <ClInclude Include="TheGrid\EntityId.hpp" />
+    <ClInclude Include="TheGrid\EntityManager.hpp" />
+    <ClInclude Include="TheGrid\Event.hpp" />
+    <ClInclude Include="TheGrid\EventManager.hpp" />
+    <ClInclude Include="TheGrid\NonCopyable.hpp" />
+    <ClInclude Include="TheGrid\Pool.hpp" />
+    <ClInclude Include="TheGrid\Receiver.hpp" />
+    <ClInclude Include="TheGrid\SimpleSignal.hpp" />
+    <ClInclude Include="TheGrid\System.hpp" />
+    <ClInclude Include="TheGrid\SystemManager.hpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{3FACEB5E-4FA2-482E-8A34-61CDD09C36FA}</ProjectGuid>
     <RootNamespace>PlatformerwithExpectations</RootNamespace>
@@ -56,15 +102,16 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>D:\SFML-2.1\include;$(SolutionDir)\..\SFML-2.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>D:\SFML-2.1\lib;$(SolutionDir)\..\SFML-2.1\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-graphics.lib;sfml-window.lib;sfml-system.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
