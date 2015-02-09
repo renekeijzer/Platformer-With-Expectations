@@ -11,13 +11,20 @@ public:
 
 	sf::Vector2f getPosition(){ return position; }
 	sf::Vector2f getVelocity(){ return velocity; }
+	sf::Vector2f getMaxVelocity(){ return maxVelocity; }
+	sf::Vector2f getSpeed(){ return speed; }
 
 	void setVelocity(sf::Vector2f vel){ velocity = vel; }
 	void setPosition(sf::Vector2f pos){ position = pos; }
+	void setMaxVelocity(sf::Vector2f mv){ maxVelocity = mv; }
+	void setSpeed(sf::Vector2f sp){ speed = sp; }
 
 private:
 	sf::Vector2f position;
 	sf::Vector2f velocity;
+
+	sf::Vector2f maxVelocity;
+	sf::Vector2f speed;
 	
 
 };

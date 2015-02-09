@@ -38,12 +38,14 @@ void Game::run(){
 
 void Game::initialize(sf::RenderTarget & target){
 	systemManager.addSystem<ControlSystem>();
+	systemManager.addSystem<MovementSystem>();
 	systemManager.addSystem<RenderSystem>(target);
 	systemManager.configure();
 }
 
 void Game::update(double dt){
 	systemManager.update<ControlSystem>(dt);
+	systemManager.update<MovementSystem>(dt);
 	systemManager.update<RenderSystem>(dt);
 	an->log();
 }

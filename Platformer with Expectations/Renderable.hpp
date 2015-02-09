@@ -4,7 +4,7 @@
 #include "TheGrid\Component.hpp"
 
 struct Renderable : public Component<Renderable>{
-	explicit Renderable(std::unique_ptr<sf::Shape> shape) : shape(std::move(shape)) {}
+	explicit Renderable(std::unique_ptr<sf::Shape> &shape) : shape(std::move(shape)) {}
 
 	std::unique_ptr<sf::Shape> shape;
 };
