@@ -19,12 +19,15 @@ public:
 	void setMaxVelocity(sf::Vector2f mv){ maxVelocity = mv; }
 	void setSpeed(sf::Vector2f sp){ speed = sp; }
 
+	bool gettingDirection = false;
+
 private:
 	sf::Vector2f position;
 	sf::Vector2f velocity;
 
 	sf::Vector2f maxVelocity;
 	sf::Vector2f speed;
+
 	
 
 };

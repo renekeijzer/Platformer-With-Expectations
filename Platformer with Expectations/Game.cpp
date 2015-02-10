@@ -1,6 +1,4 @@
 #include "Game.hpp"
-#include "Systems.hpp"
-#include "EntityFactory.hpp"
 
 Game::Game() :  systemManager(entityManager, eventManager)
 {
@@ -30,15 +28,15 @@ void Game::run(){
 		}
 
 		window.clear();
-		sf::Time elapsed = clock.restart();
-		update(static_cast<double>(elapsed.asSeconds()));
+		sf::Time elapsed = clock.getElapsedTime();
+		update(static_cast<double>(elapsed.asMilliseconds()));
 		window.display();
 	}
 }
 
 void Game::initialize(sf::RenderTarget & target){
-	systemManager.addSystem<ControlSystem>();
-	systemManager.addSystem<MovementSystem>();
+	systemManager.addSystem<ControlSystem>(5);
+	systemManager.addSystem<MovementSystem>(5);
 	systemManager.addSystem<RenderSystem>(target);
 	systemManager.configure();
 }

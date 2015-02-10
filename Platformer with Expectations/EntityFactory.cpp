@@ -13,8 +13,8 @@ void EntityFactory::CreatePlayer(sf::Vector2f position){
 	Entity player = manager.createEntity();
 	player.addComponent<Movable>(position.x, position.y, 0,0);
 	Movable::Handle & mov = player.getComponent<Movable>();
-	mov->setMaxVelocity(sf::Vector2f(15, 15));
-	mov->setSpeed(sf::Vector2f(2, 2));
+	mov->setMaxVelocity(sf::Vector2f(5, 5));
+	mov->setSpeed(sf::Vector2f(0.5, 0.5));
 
 	player.addComponent<UserControlable>();
 	

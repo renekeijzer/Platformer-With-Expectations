@@ -7,6 +7,8 @@
 #include "TheGrid\SystemManager.hpp"
 #include "TheGrid\Analytics.hpp"
 
+#include "Systems.hpp"
+#include "EntityFactory.hpp"
 
 
 class Game :

@@ -10,27 +10,34 @@ void ControlSystem::configure(EventManager & event){
 
 
 void ControlSystem::update(EntityManager & entities, EventManager & events, double dt){
-	for (Entity ent : entities.withComponents<UserControlable>()){
-		Movable::Handle & mov = ent.getComponent<Movable>();
-		for (const auto & action: actions){
-			if (sf::Keyboard::isKeyPressed(action.key)){
-				float x = mov->getSpeed().x * action.x;
-				float y = mov->getSpeed().y * action.y;
+	if (elapsedTime + interval > dt){
+		return;
+	}
+		for (Entity ent : entities.withComponents<UserControlable>()){
+			Movable::Handle & mov = ent.getComponent<Movable>();
+			for (const auto & action : actions){
+				if (sf::Keyboard::isKeyPressed(action.key)){
+					mov->gettingDirection = true;
+					float x = mov->getSpeed().x * action.x;
+					float y = mov->getSpeed().y * action.y;
 
-				sf::Vector2f current = mov->getVelocity();
-				
-				if (current.x < mov->getMaxVelocity().x && current.x > mov->getMaxVelocity().x * -1){ current.x += x; }
-				if (current.y < mov->getMaxVelocity().y && current.y > mov->getMaxVelocity().y * -1){ current.y += y; }
+					sf::Vector2f current = mov->getVelocity();
 
-				mov->setVelocity(current); 
-				std::cout << current.x << " - " << current.y << "\r\n";
-				std::cout << mov->getVelocity().x << " - " << mov->getVelocity().y<< "\r\n";
-			}
-			else{
-				
+					if (current.x < mov->getMaxVelocity().x && current.x > mov->getMaxVelocity().x * -1){ current.x += x; }
+					if (current.y < mov->getMaxVelocity().y && current.y > mov->getMaxVelocity().y * -1){ current.y += y; }
+
+					mov->setVelocity(current);
+					std::cout << current.x << " - " << current.y << "\r\n";
+					std::cout << mov->getVelocity().x << " - " << mov->getVelocity().y << "\r\n";
+				}
+				else{
+					mov->gettingDirection = false;
+				}
 			}
 		}
-	}
+
+		elapsedTime = dt;
+	
 }
 ControlSystem::~ControlSystem()
 {
