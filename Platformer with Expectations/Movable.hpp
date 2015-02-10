@@ -21,13 +21,14 @@ public:
 
 	bool gettingDirection = false;
 
+	sf::Vector2f speed;
+
 private:
 	sf::Vector2f position;
 	sf::Vector2f velocity;
 
 	sf::Vector2f maxVelocity;
-	sf::Vector2f speed;
-
+	
 	
 
 };
