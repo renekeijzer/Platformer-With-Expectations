@@ -16,14 +16,14 @@ public:
 	void update(EntityManager & entities, EventManager & events, double dt);
 	~ControlSystem();
 private:
-	struct control{
-	public:
-		sf::Keyboard::Key key;
-		float x;
-		float y;
-	};
+	//struct control{
+	//public:
+	//	sf::Keyboard::Key key;
+	//	float x;
+	//	float y;
+	//};
 
-	std::vector<control> actions;
+	//std::vector<control> actions;
 	double elapsedTime = 100; /// Dirty delta time fix
 	double interval;
 };

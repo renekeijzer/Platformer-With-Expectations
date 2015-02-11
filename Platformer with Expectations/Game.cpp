@@ -4,6 +4,9 @@ Game::Game() :  systemManager(entityManager, eventManager)
 {
 	an = Analytics::get(entityManager, systemManager, eventManager);
 	EntityFactory::get(entityManager)->CreatePlayer(sf::Vector2f(100,100));
+	MapLoader * loader = MapLoader::createInstance(entityManager);
+	loader->GenerateLevel(1);
+	//EntityFactory::get(entityManager)->CreateTile(sf::Vector2f(32, 32), sf::Vector2f(100, 100));
 }
 
 

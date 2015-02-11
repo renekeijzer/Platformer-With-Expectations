@@ -9,6 +9,7 @@
 
 #include "Systems.hpp"
 #include "EntityFactory.hpp"
+#include "MapLoader.hpp"
 
 
 class Game :

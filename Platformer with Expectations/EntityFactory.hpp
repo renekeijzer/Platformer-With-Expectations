@@ -7,6 +7,7 @@ class EntityFactory
 public:
 	static EntityFactory* get(EntityManager & manager);
 	void CreatePlayer(sf::Vector2f position);
+	void CreateTile(sf::Vector2f pos, sf::Vector2f size);
 	
 private:
 	static EntityFactory * Instance;

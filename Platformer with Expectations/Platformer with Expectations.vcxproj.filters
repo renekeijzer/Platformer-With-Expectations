@@ -79,6 +79,12 @@
     <ClCompile Include="EntityFactory.cpp">
       <Filter>Game\Util\Factory</Filter>
     </ClCompile>
+    <ClCompile Include="MapLoader.cpp">
+      <Filter>Game\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureLoader.cpp">
+      <Filter>Game\Util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TheGrid\Analytics.hpp">
@@ -176,6 +182,15 @@
     </ClInclude>
     <ClInclude Include="Components.hpp">
       <Filter>Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Gravity.hpp">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="MapLoader.hpp">
+      <Filter>Game\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureLoader.hpp">
+      <Filter>Game\Util</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

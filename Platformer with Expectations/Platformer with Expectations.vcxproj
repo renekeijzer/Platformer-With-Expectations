@@ -16,8 +16,10 @@
     <ClCompile Include="EntityFactory.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MapLoader.cpp" />
     <ClCompile Include="MovementSystem.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
+    <ClCompile Include="TextureLoader.cpp" />
     <ClCompile Include="TheGrid\Analytics.cpp" />
     <ClCompile Include="TheGrid\BaseComponent.cpp" />
     <ClCompile Include="TheGrid\BaseEvent.cpp" />
@@ -36,12 +38,15 @@
     <ClInclude Include="ControlSystem.hpp" />
     <ClInclude Include="EntityFactory.hpp" />
     <ClInclude Include="Game.hpp" />
+    <ClInclude Include="Gravity.hpp" />
+    <ClInclude Include="MapLoader.hpp" />
     <ClInclude Include="Movable.hpp" />
     <ClInclude Include="MovementSystem.hpp" />
     <ClInclude Include="Colidable.hpp" />
     <ClInclude Include="Renderable.hpp" />
     <ClInclude Include="RenderSystem.hpp" />
     <ClInclude Include="Systems.hpp" />
+    <ClInclude Include="TextureLoader.hpp" />
     <ClInclude Include="TheGrid\Analytics.hpp" />
     <ClInclude Include="TheGrid\AnalyticsException.h" />
     <ClInclude Include="TheGrid\BaseComponent.hpp" />
