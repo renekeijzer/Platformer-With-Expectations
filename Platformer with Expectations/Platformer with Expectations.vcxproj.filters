@@ -192,5 +192,11 @@
     <ClInclude Include="TextureLoader.hpp">
       <Filter>Game\Util</Filter>
     </ClInclude>
+    <ClInclude Include="CollisionEvent.hpp">
+      <Filter>Game\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events.hpp">
+      <Filter>Game\Events</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

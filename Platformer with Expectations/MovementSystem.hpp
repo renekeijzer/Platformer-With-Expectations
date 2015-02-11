@@ -6,13 +6,15 @@
 #include "TheGrid\EventManager.hpp"
 
 #include "Components.hpp"
-class MovementSystem : public System<MovementSystem>
+#include "Events.hpp"
+class MovementSystem : public System<MovementSystem>, public Receiver<MovementSystem>
 {
 public:
 	MovementSystem(double intr) : interval(intr){}
 	void configure(EventManager & events) override;
 	void update(EntityManager & entities, EventManager & events, double dt);
 	sf::Vector2f calculateIdleMovement(sf::Vector2f speed);
+	void receive(const CollisionEvent & event);
 	~MovementSystem();
 private:
 	double elaspedTime = 100; ///Dirty delta time fix

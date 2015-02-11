@@ -2,6 +2,7 @@
 
 
 void MovementSystem::configure(EventManager & event){
+	event.subscribe<CollisionEvent>(*this);
 }
 
 
@@ -16,6 +17,11 @@ void MovementSystem::update(EntityManager & entities, EventManager & events, dou
 	elaspedTime = dt;
 }
 
+
+void MovementSystem::receive(const CollisionEvent & event){
+
+	//do fancy stuff
+}
 
 
 MovementSystem::~MovementSystem()

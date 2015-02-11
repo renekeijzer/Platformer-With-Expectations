@@ -32,11 +32,13 @@
     <ClCompile Include="TheGrid\test.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CollisionEvent.hpp" />
     <ClInclude Include="CollisionSystem.hpp" />
     <ClInclude Include="Components.hpp" />
     <ClInclude Include="Controlable.hpp" />
     <ClInclude Include="ControlSystem.hpp" />
     <ClInclude Include="EntityFactory.hpp" />
+    <ClInclude Include="Events.hpp" />
     <ClInclude Include="Game.hpp" />
     <ClInclude Include="Gravity.hpp" />
     <ClInclude Include="MapLoader.hpp" />
