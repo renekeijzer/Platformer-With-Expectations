@@ -40,7 +40,7 @@ void MapLoader::GenerateLevel(unsigned char level){
 				* \Todo: rectangle algoritme -> iterating through mapping vector in search of 
 				*		 4 consecutive corners creating biggest possible rectangle minimalizing entities
 				*/
-
+				factory->CreateTile(sf::Vector2f(x * 32, y * 32), sf::Vector2f(32, 32));
 				
 
 			}
