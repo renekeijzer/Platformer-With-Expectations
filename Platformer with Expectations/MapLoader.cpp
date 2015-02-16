@@ -36,8 +36,9 @@ void MapLoader::GenerateLevel(unsigned char level){
 	std::vector<rectangle> rects = grid.Calculate();
 
 	for (rectangle rect : rects){
-
-		factory->CreateTile(sf::Vector2f(rect.first.x * 32, rect.first.y * 32), sf::Vector2f(rect.second.x*32, rect.second.y*32));
+		if (rect.second.x > 0 && rect.second.y > 0){
+			factory->CreateTile(sf::Vector2f(rect.first.x * 32, rect.first.y * 32), sf::Vector2f(rect.second.x * 32, rect.second.y * 32));
+		}
 	}
 }
 
@@ -84,7 +85,7 @@ std::vector<std::pair<sf::Vector2f, sf::Vector2f>> MapLoader::MappingGrid::Calcu
 			if (std::find(checkedPositions.begin(), checkedPositions.end(), i) == checkedPositions.end()){
 				Rectangles.push_back(getRectangleat(i));
 			}
-			else{ std::cout << "skipping: " << i << std::endl; }
+			
 		}
 		
 	}
@@ -94,25 +95,25 @@ std::vector<std::pair<sf::Vector2f, sf::Vector2f>> MapLoader::MappingGrid::Calcu
 std::pair<sf::Vector2f, sf::Vector2f> MapLoader::MappingGrid::getRectangleat(int x){
 	sf::Vector2f position(x % width, x / width);
 	sf::Vector2f size(0, 0);
+	if (mapping.at(x) == "0")
+	{
+		return std::pair<sf::Vector2f, sf::Vector2f>(position, size);
+	}
+
 
 	int tempWidth = x % width;
 	int tempheight = x / width;
-	std::cout << "Prempemptive check for: "<< tempWidth << " - " << tempheight <<std::endl;
+
 
 	while (tempWidth <= width){
 		size_t index = tempheight * width + tempWidth;
 		
 		if (index >= mapping.size()){ break; }
-		std::cout << "Checking x:";
-		std::cout << index;
-		
 		if (mapping.at(index) != "0"){
-			std::cout << " True" << std::endl;
 			tempWidth++;
 		}
 		else
 		{ 
-			std::cout << " False" << std::endl;
 			break; 
 		}
 	}
@@ -121,49 +122,40 @@ std::pair<sf::Vector2f, sf::Vector2f> MapLoader::MappingGrid::getRectangleat(int
 		size_t index = tempheight * width + x % width;
 	
 		if (index >= mapping.size()){ break; }
-		std::cout << "Checking y:";
-		std::cout << index << "size : " << mapping.size();
-
 		if (mapping.at(index) != "0"){
-			std::cout << " True" << std::endl;
 			tempheight++;
 		}
 		else{
-			std::cout << " False" << std::endl;
 			break;
 		}
 	}
 
-	std::cout << "=============" << std::endl <<std::endl;
-
-	if (tempheight == 0 || tempWidth == 0)
+	if (tempheight <= 1 && tempWidth <= 1)
 	{
-		return std::pair<sf::Vector2f, sf::Vector2f>(position, size);
+		return std::pair<sf::Vector2f, sf::Vector2f>(position, sf::Vector2f(1,1));
 	}
 
-	std::cout << "Expected bounds are: " << tempWidth - x % width << " - " << tempheight - x / width << "\r\n";
+	size.x = 1;
+	size.y = 1;
+
 	for (int iY = x / width; iY < tempheight - x/width; iY++){
 		for (int iX = x % width; iX < tempWidth - x%width; iX++){
+			size_t index = iY * width + iX;
+			if (index >= mapping.size()){ break; }
 			
-			std::cout << "Checking position: " << "x " << iX << "-y" << iY << "\r\n";
-			
-			if (mapping.at(iY * width + iX) == "0"){
-				std::cout << "False\r\nAdded an " << iY * width + iX << " as Checked\r\n";
+			if (mapping.at(index) != "0"){
+				size.x = iX + 1;
+				size.y = iY + 1;
 				checkedPositions.push_back(iY * width + iX);
-				break;
 			}
 			else
 			{
-				std::cout << "true\r\nAdded an " << iY * width + iX << " as Checked\r\n";
-				checkedPositions.push_back(iY * width + iX);
-				size.x = iX + 1;
-				size.y = iY + 1;
+			
+				checkedPositions.clear();
+				return std::pair<sf::Vector2f, sf::Vector2f>(position, size);
 			}
 		}	
 	}
-
-	
-	std::cout << " << Created vector: {pos : " << position.x << " - " << position.y << ", size: " << size.x << " - " << size.y << "}" << std::endl << std::endl;
 	return std::pair<sf::Vector2f, sf::Vector2f>(position, size);
 }
 
