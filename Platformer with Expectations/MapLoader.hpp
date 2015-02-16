@@ -30,8 +30,8 @@ class MappingGrid{
 		std::pair<sf::Vector2f, sf::Vector2f> getRectangleat(int x);
 		std::vector<std::string> mapping;
 		std::vector<int> checkedPositions;
-		int width;
-		int height;
+		int width = 0;
+		int height = 0;
 	};
 
 
