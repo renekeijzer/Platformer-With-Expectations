@@ -4,3 +4,4 @@
 #include "Movable.hpp"
 #include "Renderable.hpp"
 #include "Controlable.hpp"
+#include "Gravity.hpp"

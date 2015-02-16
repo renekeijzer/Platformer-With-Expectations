@@ -16,14 +16,13 @@ void ControlSystem::update(EntityManager & entities, EventManager & events, doub
 		for (Entity ent : entities.withComponents<UserControlable>()){
 			Movable::Handle & mov = ent.getComponent<Movable>();
 			sf::Vector2f Velocity = mov->getVelocity();
+
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)){
 				Velocity.x = (Velocity.x > mov->getMaxVelocity().x * -1 ? Velocity.x + mov->speed.x * -1 : mov->getMaxVelocity().x*-1);
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)){
 				Velocity.x = (Velocity.x > mov->getMaxVelocity().x * 1 ? Velocity.x + mov->speed.x * 1 : mov->getMaxVelocity().x);
-			}
-			else
-			{
+			}else{
 				if (Velocity.x > 0.1){
 					Velocity.x -= 0.1;
 				}

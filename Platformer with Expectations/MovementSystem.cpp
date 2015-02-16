@@ -10,10 +10,19 @@ void MovementSystem::update(EntityManager & entities, EventManager & events, dou
 	if (elaspedTime + interval > dt){
 		return;
 	}
+
+	
+
 	for (Entity & ent : entities.withComponents<Movable>()){
 		Movable::Handle & mov = ent.getComponent<Movable>();
+		if (ent.hasComponent<Gravity>()){
+			Gravity::Handle & grav = ent.getComponent<Gravity>();
+			mov->setVelocity(sf::Vector2f(mov->getVelocity().x, mov->getVelocity().y + grav->getFalling()));
+		}
 		mov->setPosition(mov->getPosition() + mov->getVelocity());
 	}
+
+
 	elaspedTime = dt;
 }
 

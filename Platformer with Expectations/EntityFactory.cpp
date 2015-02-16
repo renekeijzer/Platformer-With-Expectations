@@ -23,6 +23,7 @@ void EntityFactory::CreatePlayer(sf::Vector2f position){
 	shape->setFillColor(sf::Color::White);
 	shape->setPosition(position);
     player.addComponent<Renderable>(std::move(shape));
+	player.addComponent<Gravity>(0.1);
 
 	sf::Rect<float> cRect(position, sf::Vector2f(32,32));
 	player.addComponent<Colidable>(cRect);
