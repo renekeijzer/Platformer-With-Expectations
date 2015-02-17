@@ -150,7 +150,6 @@ std::pair<sf::Vector2f, sf::Vector2f> MapLoader::MappingGrid::getRectangleat(int
 			}
 			else
 			{
-			
 				checkedPositions.clear();
 				return std::pair<sf::Vector2f, sf::Vector2f>(position, size);
 			}

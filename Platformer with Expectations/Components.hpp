@@ -5,3 +5,4 @@
 #include "Renderable.hpp"
 #include "Controlable.hpp"
 #include "Gravity.hpp"
+#include "Focussable.hpp"

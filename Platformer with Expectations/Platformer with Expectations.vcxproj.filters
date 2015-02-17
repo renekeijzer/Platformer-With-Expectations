@@ -198,5 +198,8 @@
     <ClInclude Include="Events.hpp">
       <Filter>Game\Events</Filter>
     </ClInclude>
+    <ClInclude Include="Focussable.hpp">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
