@@ -12,6 +12,7 @@ EntityFactory* EntityFactory::get(EntityManager& manager){
 void EntityFactory::CreatePlayer(sf::Vector2f position){
 	Entity player = manager.createEntity();
 
+	player.addComponent<Focussable>(1, true);
 	player.addComponent<Movable>(position.x, position.y, 0,0);
 	Movable::Handle & mov = player.getComponent<Movable>();
 	mov->setMaxVelocity(sf::Vector2f(5, 5));

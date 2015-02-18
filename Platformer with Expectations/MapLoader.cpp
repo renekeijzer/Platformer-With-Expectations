@@ -71,15 +71,20 @@ MapLoader::MappingGrid::MappingGrid(int x, int y) : width(x), height(y){}
 
 void MapLoader::MappingGrid::addLine(std::vector<std::string> lines){
 	width = lines.size();
+	
 	for (std::string line : lines){
+		std::cout << line;
 		mapping.push_back(line);
 	}
+	std::cout << std::endl;
 	height = mapping.size() / width;
 }
 
 std::vector<std::pair<sf::Vector2f, sf::Vector2f>> MapLoader::MappingGrid::Calculate(){
 	std::vector<std::pair<sf::Vector2f, sf::Vector2f>> Rectangles;
-	if (width < 1){}
+	if (width < 1){
+	//throw something here
+	}
 	else{
 		for (int i = 0; i < mapping.size(); i++){
 			if (std::find(checkedPositions.begin(), checkedPositions.end(), i) == checkedPositions.end()){
@@ -91,36 +96,28 @@ std::vector<std::pair<sf::Vector2f, sf::Vector2f>> MapLoader::MappingGrid::Calcu
 	}
 	return Rectangles;
 }
+std::pair<sf::Vector2f, sf::Vector2f> MapLoader::MappingGrid::predicate(sf::Vector2f pos){
 
-std::pair<sf::Vector2f, sf::Vector2f> MapLoader::MappingGrid::getRectangleat(int x){
-	sf::Vector2f position(x % width, x / width);
-	sf::Vector2f size(0, 0);
-	if (mapping.at(x) == "0")
-	{
-		return std::pair<sf::Vector2f, sf::Vector2f>(position, size);
-	}
+	int tempWidth = pos.x;
+	int tempheight = pos.y;
 
 
-	int tempWidth = x % width;
-	int tempheight = x / width;
-
-
-	while (tempWidth <= width){
+	while (tempWidth < width){
 		size_t index = tempheight * width + tempWidth;
-		
+
 		if (index >= mapping.size()){ break; }
 		if (mapping.at(index) != "0"){
 			tempWidth++;
 		}
 		else
-		{ 
-			break; 
+		{
+			break;
 		}
 	}
 
-	while (tempheight <= height){
-		size_t index = tempheight * width + x % width;
-	
+	while (tempheight < height){
+		size_t index = tempheight * width + pos.x;
+
 		if (index >= mapping.size()){ break; }
 		if (mapping.at(index) != "0"){
 			tempheight++;
@@ -130,32 +127,53 @@ std::pair<sf::Vector2f, sf::Vector2f> MapLoader::MappingGrid::getRectangleat(int
 		}
 	}
 
-	if (tempheight <= 1 && tempWidth <= 1)
-	{
-		return std::pair<sf::Vector2f, sf::Vector2f>(position, sf::Vector2f(1,1));
+
+	return std::pair<sf::Vector2f, sf::Vector2f>(pos, sf::Vector2f(tempWidth - pos.x, tempheight - pos.y));
+}
+
+std::pair<sf::Vector2f, sf::Vector2f> MapLoader::MappingGrid::getRectangleat(int x){
+	sf::Vector2f position(x % width, x / width);
+	sf::Vector2f size(0, 0);
+	
+	std::pair<sf::Vector2f, sf::Vector2f> expectedRect = predicate(position);
+	if (expectedRect.second.x == 0 || expectedRect.second.y == 0){
+		return std::pair<sf::Vector2f, sf::Vector2f>(position, size);
 	}
+	size.x = 0;
+	size.y = 0;
 
-	size.x = 1;
-	size.y = 1;
-
-	for (int iY = x / width; iY < tempheight - x/width; iY++){
-		for (int iX = x % width; iX < tempWidth - x%width; iX++){
+	for (int iY = position.y; iY < position.y + expectedRect.second.y; iY++){
+		for (int iX = position.x; iX < position.x + expectedRect.second.x; iX++){
 			size_t index = iY * width + iX;
 			if (index >= mapping.size()){ break; }
 			
 			if (mapping.at(index) != "0"){
-				size.x = iX + 1;
-				size.y = iY + 1;
-				checkedPositions.push_back(iY * width + iX);
+				size.x = iX;
+				size.y = iY;
 			}
 			else
 			{
-				checkedPositions.clear();
-				return std::pair<sf::Vector2f, sf::Vector2f>(position, size);
+				if (size.x == 0){
+					size.x = width - 1;
+				}
+			
+				std::pair<sf::Vector2f, sf::Vector2f> rect = std::pair<sf::Vector2f, sf::Vector2f>(position, size);
+				finalize(rect);
+				return rect ;
 			}
 		}	
 	}
-	return std::pair<sf::Vector2f, sf::Vector2f>(position, size);
+
+	finalize(expectedRect);
+	return expectedRect;
+}
+
+void MapLoader::MappingGrid::finalize(std::pair<sf::Vector2f, sf::Vector2f> rect){
+	for (int iY = rect.first.y; iY < rect.first.y + rect.second.y; iY++){
+		for (int iX = rect.first.x; iX < rect.first.x + rect.second.x; iX++){
+			checkedPositions.push_back(iY * width + iX);
+		}
+	}
 }
 
 MapLoader::~MapLoader()
