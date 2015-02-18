@@ -28,6 +28,8 @@ class MappingGrid{
 
 	private:
 		std::pair<sf::Vector2f, sf::Vector2f> getRectangleat(int x);
+		std::pair<sf::Vector2f, sf::Vector2f> predicate(sf::Vector2f pos);
+		void finalize(std::pair<sf::Vector2f, sf::Vector2f> rect);
 		std::vector<std::string> mapping;
 		std::vector<int> checkedPositions;
 		int width = 0;
