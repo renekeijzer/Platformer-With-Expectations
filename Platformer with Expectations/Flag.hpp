@@ -1,10 +1,13 @@
 
 #include "TheGrid\Component.hpp"
+#include "types.h"
 
 struct Flag : public Component<Flag>{
 public:
-	Flag(std::string nm) : name(nm){}
-	std::string name;
+	Flag(PWE::EntityTypes nm) : type(nm){}
+	PWE::EntityTypes type;
+
+
 
 
 };

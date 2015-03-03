@@ -204,5 +204,8 @@
     <ClInclude Include="Flag.hpp">
       <Filter>Game\Components</Filter>
     </ClInclude>
+    <ClInclude Include="types.h">
+      <Filter>Game\Util</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

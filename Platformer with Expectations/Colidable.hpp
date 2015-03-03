@@ -23,6 +23,32 @@ struct Colidable : public Component<Colidable>
 		collisionRect.left = x;
 	}
 
+	void setCollision(std::bitset<4> cMap){
+		map = cMap;
+	}
+
+	bool getCollisionX(){
+		return map.at(0);
+	}
+
+	bool getCollisionXY(){
+		return map.at(1);
+	}
+
+	bool getCollisionYX(){
+		return map.at(2);
+	}
+
+	bool getCollisionY(){
+		return map.at(3);
+	}
+
+	PWE::CollisionMap getCollision(){
+		return map;
+	}
+
+
 private:
 	sf::Rect<float> collisionRect;
+	PWE::CollisionMap map = 0;
 };

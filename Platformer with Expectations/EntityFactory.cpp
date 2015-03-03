@@ -14,7 +14,7 @@ void EntityFactory::CreatePlayer(sf::Vector2f position){
 
 	player.addComponent<Focussable>(1, true);
 	player.addComponent<Movable>(position.x, position.y, 0,0);
-	player.addComponent<Flag>("Player");
+	player.addComponent<Flag>(PWE::EntityTypes::Player);
 	Movable::Handle & mov = player.getComponent<Movable>();
 	mov->setMaxVelocity(sf::Vector2f(5, 5));
 	mov->setSpeed(sf::Vector2f(0.1, 0.1));
@@ -36,7 +36,7 @@ void EntityFactory::CreateTile(sf::Vector2f pos, sf::Vector2f size){
 
 	sf::Rect<float> cRect(pos, size);
 	ent.addComponent<Colidable>(cRect);
-	ent.addComponent<Flag>("Tile");
+	ent.addComponent<Flag>(PWE::EntityTypes::Tile);
 		
 	std::unique_ptr<sf::Shape> shape(new sf::RectangleShape(size));
 	shape->setPosition(pos);
