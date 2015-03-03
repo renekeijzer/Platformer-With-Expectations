@@ -6,6 +6,7 @@ Game::Game() :  systemManager(entityManager, eventManager)
 	EntityFactory::get(entityManager)->CreatePlayer(sf::Vector2f(100,100));
 	MapLoader * loader = MapLoader::createInstance(entityManager);
 	loader->GenerateLevel(2);
+	delete loader; //<<Tehee memory leak
 	//EntityFactory::get(entityManager)->CreateTile(sf::Vector2f(32, 32), sf::Vector2f(100, 100));
 }
 
@@ -39,6 +40,7 @@ void Game::run(){
 
 void Game::initialize(sf::RenderTarget & target){
 	systemManager.addSystem<ControlSystem>(5);
+	systemManager.addSystem<CollisionSystem>();
 	systemManager.addSystem<MovementSystem>(5);
 	systemManager.addSystem<RenderSystem>(target);
 	systemManager.configure();
@@ -46,6 +48,7 @@ void Game::initialize(sf::RenderTarget & target){
 
 void Game::update(double dt){
 	systemManager.update<ControlSystem>(dt);
+	systemManager.update<CollisionSystem>(dt);
 	systemManager.update<MovementSystem>(dt);
 	systemManager.update<RenderSystem>(dt);
 	an->log();

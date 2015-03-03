@@ -23,10 +23,6 @@ struct Colidable : public Component<Colidable>
 		collisionRect.left = x;
 	}
 
-	//bool intersects(sf::Rect<float> other){
-	//	return collisionRect.intersects(other);
-	//}
-
 private:
 	sf::Rect<float> collisionRect;
 };

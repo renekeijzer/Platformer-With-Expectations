@@ -1,10 +1,6 @@
 #include "ControlSystem.hpp"
 
 void ControlSystem::configure(EventManager & event){
-	//actions.push_back({ sf::Keyboard::Key::W, 0, -1 });
-	//actions.push_back({ sf::Keyboard::Key::A, -1, 0 });
-	//actions.push_back({ sf::Keyboard::Key::S, 0, 1 });
-	//actions.push_back({ sf::Keyboard::Key::D, 1, 0 });
 	
 }
 

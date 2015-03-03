@@ -201,5 +201,8 @@
     <ClInclude Include="Focussable.hpp">
       <Filter>Game\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Flag.hpp">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

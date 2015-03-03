@@ -39,6 +39,7 @@
     <ClInclude Include="ControlSystem.hpp" />
     <ClInclude Include="EntityFactory.hpp" />
     <ClInclude Include="Events.hpp" />
+    <ClInclude Include="Flag.hpp" />
     <ClInclude Include="Focussable.hpp" />
     <ClInclude Include="Game.hpp" />
     <ClInclude Include="Gravity.hpp" />

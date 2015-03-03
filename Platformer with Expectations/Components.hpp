@@ -6,3 +6,4 @@
 #include "Controlable.hpp"
 #include "Gravity.hpp"
 #include "Focussable.hpp"
+#include "Flag.hpp"
