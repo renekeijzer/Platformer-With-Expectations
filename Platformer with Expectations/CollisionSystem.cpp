@@ -53,6 +53,7 @@ bool CollisionSystem::Collides(Entity & lhs, Entity & rhs){
 	// If the intersection is valid (positive non zero area), then there is an intersection
 	if ((interLeft < interRight) && (interTop < interBottom))
 	{
+
 		return true;
 	}
 	else

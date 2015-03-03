@@ -14,6 +14,7 @@ public:
 	sf::Vector2f getMaxVelocity(){ return maxVelocity; }
 	sf::Vector2f getSpeed(){ return speed; }
 
+	void setVelocity(float x, float y){ velocity.x = x; velocity.y = y; }
 	void setVelocity(sf::Vector2f vel){ velocity = vel; }
 	void setPosition(sf::Vector2f pos){ position = pos; }
 	void setMaxVelocity(sf::Vector2f mv){ maxVelocity = mv; }

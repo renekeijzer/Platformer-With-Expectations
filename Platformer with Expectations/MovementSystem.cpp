@@ -5,7 +5,9 @@ void MovementSystem::configure(EventManager & event){
 	event.subscribe<CollisionEvent>(*this);
 }
 void MovementSystem::handleCollisions(EntityManager & entities){
-	for (auto colidedPair : colidedEntities){
+	while (!colidedEntities.empty() ){
+		auto & colidedPair = colidedEntities.top();
+
 		auto lhs = entities.get(colidedPair.first);
 		auto rhs = entities.get(colidedPair.second);
 		
@@ -18,6 +20,17 @@ void MovementSystem::handleCollisions(EntityManager & entities){
 				Colidable::Handle & lhsColidable = lhs.getComponent<Colidable>();
 				Colidable::Handle & rhsColidable = rhs.getComponent<Colidable>();
 
+				if (lhsColidable->getPosition().y <= rhsColidable->getPosition().y){
+					Gravity::Handle & lhsGravity = lhs.getComponent<Gravity>();
+					Movable::Handle & lhsMovable = lhs.getComponent<Movable>();
+
+					Mo
+
+					lhsMovable->setVelocity(lhsMovable->getVelocity().x, 0);
+					lhsGravity->setFalling(false);
+				}
+			
+
 			}
 			break;
 		case PWE::EntityTypes::Tile:
@@ -27,6 +40,7 @@ void MovementSystem::handleCollisions(EntityManager & entities){
 			std::cerr << "UNKNOWN ENTITY TYPE SOMETHING WENT WRONG";
 		}
 
+		colidedEntities.pop();
 
 	}
 }
@@ -63,7 +77,9 @@ void MovementSystem::updateGravity(Entity & ent){
 	if (ent.hasComponent<Gravity>()){
 		Movable::Handle & mov = ent.getComponent<Movable>();
 		Gravity::Handle & grav = ent.getComponent<Gravity>();
-		mov->setVelocity(sf::Vector2f(mov->getVelocity().x, mov->getVelocity().y + grav->getFalling()));
+		if (grav->isFalling()){
+			mov->setVelocity(sf::Vector2f(mov->getVelocity().x, mov->getVelocity().y + grav->getFalling()));
+		}
 	}
 }
 
@@ -72,10 +88,10 @@ void MovementSystem::receive(const CollisionEvent & event){
 	Flag::Handle right = event.right.getComponent<Flag>();
 
 	if (event.left.hasComponent<Movable>()){
-		colidedEntities.push_back(std::make_pair( event.left.getId(), event.right.getId()));
+		colidedEntities.push(std::make_pair( event.left.getId(), event.right.getId()));
 	}
 	if (event.right.hasComponent<Movable>()){
-		colidedEntities.push_back(std::make_pair(event.left.getId(), event.right.getId()));
+		colidedEntities.push(std::make_pair(event.left.getId(), event.right.getId()));
 	}
 
 }

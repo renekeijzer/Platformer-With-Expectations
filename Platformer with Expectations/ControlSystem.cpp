@@ -11,6 +11,11 @@ void ControlSystem::update(EntityManager & entities, EventManager & events, doub
 	}
 		for (Entity ent : entities.withComponents<UserControlable>()){
 			Movable::Handle & mov = ent.getComponent<Movable>();
+			if (ent.hasComponent<Gravity>()){
+				Gravity::Handle grav = ent.getComponent<Gravity>();
+				grav->setFalling(true);
+				
+			}
 			sf::Vector2f Velocity = mov->getVelocity();
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)){

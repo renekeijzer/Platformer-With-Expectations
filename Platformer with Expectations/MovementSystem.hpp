@@ -1,5 +1,6 @@
 #pragma once
 #include <cmath>
+#include <stack>
 
 #include "TheGrid\SystemManager.hpp"
 #include "TheGrid\EntityManager.hpp"
@@ -23,7 +24,7 @@ private:
 	void updateGravity(Entity & id);
 	void updatePosition(Entity & id);
 
-	std::vector<std::pair<EntityId, EntityId>> colidedEntities;
+	std::stack<std::pair<EntityId, EntityId>> colidedEntities;
 	double elaspedTime = 100; ///Dirty delta time fix
 	double interval;
 };
