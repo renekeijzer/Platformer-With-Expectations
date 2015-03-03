@@ -18,7 +18,6 @@ void MovementSystem::handleCollisions(EntityManager & entities){
 				Colidable::Handle & lhsColidable = lhs.getComponent<Colidable>();
 				Colidable::Handle & rhsColidable = rhs.getComponent<Colidable>();
 
-				if ()
 			}
 			break;
 		case PWE::EntityTypes::Tile:

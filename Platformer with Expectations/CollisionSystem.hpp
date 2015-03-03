@@ -13,7 +13,7 @@ public:
 	CollisionSystem();
 	void update(EntityManager & entities, EventManager & events, double dt);
 	
-	bool Collides(sf::Rect<float> rect, sf::Rect<float> other);
+	bool Collides(Entity & lhs, Entity & rhs);
 
 	~CollisionSystem();
 };

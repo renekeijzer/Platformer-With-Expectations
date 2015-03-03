@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML\Graphics.hpp>
 #include "TheGrid\Component.hpp"
+#include "types.h"
 struct Colidable : public Component<Colidable>
 {
 	Colidable(){}

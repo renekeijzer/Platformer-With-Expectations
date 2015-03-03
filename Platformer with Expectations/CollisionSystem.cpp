@@ -13,10 +13,7 @@ void CollisionSystem::update(EntityManager & entities, EventManager & events, do
 			if (ent != other){
 				Colidable::Handle & otherHandle = other.getComponent<Colidable>();
 
-				sf::Rect<float> entRect = colHandle->getRect();
-				sf::Rect<float> otherRect = otherHandle->getRect();
-
-				if (Collides(entRect, otherRect)){
+				if (Collides(ent, other)){
 					events.emit<CollisionEvent>(ent, other);
 				}
 			}
@@ -26,7 +23,13 @@ void CollisionSystem::update(EntityManager & entities, EventManager & events, do
 
 
 
-bool CollisionSystem::Collides(sf::Rect<float> rect, sf::Rect<float> other){
+bool CollisionSystem::Collides(Entity & lhs, Entity & rhs){
+	Colidable::Handle lhsColidable = lhs.getComponent<Colidable>();
+	Colidable::Handle rhsColidable = rhs.getComponent<Colidable>();
+	
+	sf::Rect<float> rect = lhsColidable->getRect();
+	sf::Rect<float> other = rhsColidable->getRect();
+
 	// Rectangles with negative dimensions are allowed, so we must handle them correctly
 
 	// Compute the min and max of the first rectangle on both axes
