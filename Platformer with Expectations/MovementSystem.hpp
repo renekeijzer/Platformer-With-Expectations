@@ -17,6 +17,11 @@ public:
 	void receive(const CollisionEvent & event);
 	~MovementSystem();
 private:
+
+	void updateCollision(Entity & id);
+	void updateGravity(Entity & id);
+	void updatePosition(Entity & id);
+
 	std::vector<EntityId> colidedEntities;
 	double elaspedTime = 100; ///Dirty delta time fix
 	double interval;
