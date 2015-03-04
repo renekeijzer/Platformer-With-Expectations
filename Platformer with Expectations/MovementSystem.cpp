@@ -24,10 +24,17 @@ void MovementSystem::handleCollisions(EntityManager & entities){
 					Gravity::Handle & lhsGravity = lhs.getComponent<Gravity>();
 					Movable::Handle & lhsMovable = lhs.getComponent<Movable>();
 
-					Mo
-
+					
+					float yDif = rhsColidable->getPosition().y - (lhsColidable->getPosition().y + lhsColidable->getWidth());
+					
+					lhsMovable->setPosition(lhsMovable->getPosition().x, lhsMovable->getPosition().y + yDif);
+					updateCollision(lhs);
+					
+					
 					lhsMovable->setVelocity(lhsMovable->getVelocity().x, 0);
 					lhsGravity->setFalling(false);
+					lhsGravity->setJumping(false);
+					
 				}
 			
 
@@ -54,7 +61,9 @@ void MovementSystem::update(EntityManager & entities, EventManager & events, dou
 		updateGravity(ent);
 		updateCollision(ent);
 		updatePosition(ent);
+		
 	}
+
 
 
 	elaspedTime = dt;

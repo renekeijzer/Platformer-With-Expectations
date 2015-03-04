@@ -13,8 +13,13 @@ void ControlSystem::update(EntityManager & entities, EventManager & events, doub
 			Movable::Handle & mov = ent.getComponent<Movable>();
 			if (ent.hasComponent<Gravity>()){
 				Gravity::Handle grav = ent.getComponent<Gravity>();
+
 				grav->setFalling(true);
-				
+
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) && grav->isJumping()){
+					mov->setVelocity(mov->getVelocity().x, -10);
+					grav->setJumping(true);
+				}
 			}
 			sf::Vector2f Velocity = mov->getVelocity();
 
@@ -23,13 +28,18 @@ void ControlSystem::update(EntityManager & entities, EventManager & events, doub
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)){
 				Velocity.x = (Velocity.x > mov->getMaxVelocity().x * 1 ? Velocity.x + mov->speed.x * 1 : mov->getMaxVelocity().x);
-			}else{
+			}
+			else
+			{
 				if (Velocity.x > 0.1){
 					Velocity.x -= 0.1;
 				}
-				else if(Velocity.x < -0.1){
+				else if (Velocity.x < -0.1)
+				{
 					Velocity.x += 0.1;
-				}else{ 
+				}
+				else
+				{ 
 					Velocity.x = 0; 
 				}
 			}

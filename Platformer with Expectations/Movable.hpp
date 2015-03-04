@@ -17,10 +17,9 @@ public:
 	void setVelocity(float x, float y){ velocity.x = x; velocity.y = y; }
 	void setVelocity(sf::Vector2f vel){ velocity = vel; }
 	void setPosition(sf::Vector2f pos){ position = pos; }
+	void setPosition(float x, float y){ position.x = x; position.y = y; }
 	void setMaxVelocity(sf::Vector2f mv){ maxVelocity = mv; }
 	void setSpeed(sf::Vector2f sp){ speed = sp; }
-
-	bool gettingDirection = false;
 
 	sf::Vector2f speed;
 
