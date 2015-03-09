@@ -26,6 +26,9 @@
     <Filter Include="Game\Util\Factory">
       <UniqueIdentifier>{633e1fb4-6fb3-4196-be75-b667d4b5daed}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Util\Exceptions">
+      <UniqueIdentifier>{ee4d1d1c-ec94-4aa7-9104-12ae8cad7b9d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TheGrid\Analytics.cpp">
@@ -83,6 +86,15 @@
       <Filter>Game\Util</Filter>
     </ClCompile>
     <ClCompile Include="TextureLoader.cpp">
+      <Filter>Game\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Config.cpp">
+      <Filter>Game\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Keymap.cpp">
+      <Filter>Game\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Keybuffer.cpp">
       <Filter>Game\Util</Filter>
     </ClCompile>
   </ItemGroup>
@@ -205,6 +217,18 @@
       <Filter>Game\Components</Filter>
     </ClInclude>
     <ClInclude Include="types.h">
+      <Filter>Game\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Config.hpp">
+      <Filter>Game\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="FileNotfound.h">
+      <Filter>Game\Util\Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="Keymap.hpp">
+      <Filter>Game\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Keybuffer.hpp">
       <Filter>Game\Util</Filter>
     </ClInclude>
   </ItemGroup>

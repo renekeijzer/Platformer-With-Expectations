@@ -7,4 +7,11 @@ namespace PWE{
 		Player,
 		Tile,
 	};
+
+	enum PlayerAction{
+		strafeRight,
+		strafeLeft,
+		jump,
+		duck,
+	};
 }

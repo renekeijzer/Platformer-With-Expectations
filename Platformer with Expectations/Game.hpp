@@ -18,8 +18,21 @@ class Game :
 public:
 	Game();
 	void run();
-
 	~Game();
+
+	class Config{
+	public:
+		Config * get(){};
+		Config * operator->(){ if (Instance == nullptr){ Instance = new Config; } return Instance; }
+		bool Fullscreen = false;
+		~Config();
+	private:
+		static Config * Instance;
+		Config();
+		Config(Config const&){};
+		Config& operator=(Config const &){};
+
+	};
 
 private:
 	void initialize(sf::RenderTarget & target);

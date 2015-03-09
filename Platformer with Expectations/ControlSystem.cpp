@@ -6,16 +6,25 @@ void ControlSystem::configure(EventManager & event){
 
 
 void ControlSystem::update(EntityManager & entities, EventManager & events, double dt){
-	if (elapsedTime + interval > dt){
-		return;
-	}
-		for (Entity ent : entities.withComponents<UserControlable>()){
+	std::cout << "Control System call! \r\n";
+	//std::cout << keys.getMap().size();
+
+	//for(auto key : keys.getMap())
+	//{
+	//	if (sf::Keyboard::isKeyPressed(key.first)){
+		//	keybuffer.push(key);
+	//		std::cout << "Keypressed: " << key.first << "\r\n";
+//		}
+	//}
+
+	
+	/*	for (Entity ent : entities.withComponents<UserControlable>()){
 			Movable::Handle & mov = ent.getComponent<Movable>();
 			if (ent.hasComponent<Gravity>()){
 				Gravity::Handle grav = ent.getComponent<Gravity>();
 
 				grav->setFalling(true);
-
+				
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) && grav->isJumping()){
 					mov->setVelocity(mov->getVelocity().x, -10);
 					grav->setJumping(true);
@@ -46,8 +55,8 @@ void ControlSystem::update(EntityManager & entities, EventManager & events, doub
 			mov->setVelocity(Velocity);
 		}
 
-		elapsedTime = dt;
-	
+		
+*/	
 }
 ControlSystem::~ControlSystem()
 {

@@ -6,14 +6,14 @@ Game::Game() :  systemManager(entityManager, eventManager)
 	EntityFactory::get(entityManager)->CreatePlayer(sf::Vector2f(100,100));
 	MapLoader * loader = MapLoader::createInstance(entityManager);
 	loader->GenerateLevel(1);
-	delete loader; //<<Tehee memory leak
+	delete loader; 
 	//EntityFactory::get(entityManager)->CreateTile(sf::Vector2f(32, 32), sf::Vector2f(100, 100));
 }
 
 
 void Game::run(){
-
-	sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "Platformer with expectations", sf::Style::Fullscreen);
+	
+	sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "Platformer with expectations", sf::Style::Default);
 	sf::Font font;
 	initialize(window);
 
@@ -38,8 +38,13 @@ void Game::run(){
 	}
 }
 
-void Game::initialize(sf::RenderTarget & target){
-	systemManager.addSystem<ControlSystem>(5);
+void Game::initialize(sf::RenderTarget & target)
+{
+	Keybuffer buffer;
+	Keymap keymap("keys.conf");
+	keymap.load();
+	
+	systemManager.addSystem<ControlSystem>(500, buffer, keymap);
 	systemManager.addSystem<CollisionSystem>();
 	systemManager.addSystem<MovementSystem>(10);
 	systemManager.addSystem<RenderSystem>(target);

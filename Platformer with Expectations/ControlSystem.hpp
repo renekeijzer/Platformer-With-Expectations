@@ -7,16 +7,20 @@
 #include "TheGrid\EventManager.hpp"
 
 #include "Components.hpp"
+#include "types.h"
+#include "Keybuffer.hpp"
+#include "Keymap.hpp"
+
 
 class ControlSystem : public System<ControlSystem>
 {
 public:
-	ControlSystem(double intr) : interval(intr){}
+	ControlSystem(double intr, Keybuffer & key, Keymap & keymap) : System<ControlSystem>(intr), keybuffer(key), keys(keymap){  }
 	void configure(EventManager & events) override;
 	void update(EntityManager & entities, EventManager & events, double dt);
 	~ControlSystem();
 private:
-	double elapsedTime = 100; /// Dirty delta time fix
-	double interval;
+	Keymap & keys;
+	Keybuffer &keybuffer;
 };
 
