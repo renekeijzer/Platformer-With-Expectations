@@ -15,6 +15,7 @@ void Keymap::load(){
 				mapping.push_back(createPair(lines[0], lines[1]));
 			}
 			loaded = true;
+			std::cout << "Keys loaded " << mapping.size();
 		}
 	}
 	catch (std::exception ex){

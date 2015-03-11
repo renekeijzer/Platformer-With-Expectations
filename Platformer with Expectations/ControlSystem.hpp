@@ -15,7 +15,8 @@
 class ControlSystem : public System<ControlSystem>
 {
 public:
-	ControlSystem(double intr, Keybuffer & key, Keymap & keymap) : System<ControlSystem>(intr), keybuffer(key), keys(keymap){  }
+	ControlSystem(double intr, Keybuffer & key, Keymap & keymap) 
+		: System<ControlSystem>(intr), keybuffer(key), keys(keymap){  }
 	void configure(EventManager & events) override;
 	void update(EntityManager & entities, EventManager & events, double dt);
 	~ControlSystem();

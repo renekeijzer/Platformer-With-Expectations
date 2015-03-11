@@ -1,23 +1,21 @@
 #include "ControlSystem.hpp"
 
 void ControlSystem::configure(EventManager & event){
-	
+	std::cout << keys.getMap().size() << std::endl;
 }
 
 
 void ControlSystem::update(EntityManager & entities, EventManager & events, double dt){
-	std::cout << "Control System call! \r\n";
-	//std::cout << keys.getMap().size();
+	/*
+	for(auto & key : keys.getMap())
+	{
+		if (sf::Keyboard::isKeyPressed(key.first)){
+	//		keybuffer.push(key);
+			std::cout << "Keypressed: " << key.first << "\r\n";
+		}
+	}
 
-	//for(auto key : keys.getMap())
-	//{
-	//	if (sf::Keyboard::isKeyPressed(key.first)){
-		//	keybuffer.push(key);
-	//		std::cout << "Keypressed: " << key.first << "\r\n";
-//		}
-	//}
-
-	
+	*/
 	/*	for (Entity ent : entities.withComponents<UserControlable>()){
 			Movable::Handle & mov = ent.getComponent<Movable>();
 			if (ent.hasComponent<Gravity>()){
