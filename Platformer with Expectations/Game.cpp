@@ -7,7 +7,6 @@ Game::Game() :  systemManager(entityManager, eventManager)
 	MapLoader * loader = MapLoader::createInstance(entityManager);
 	loader->GenerateLevel(1);
 	delete loader; 
-	//EntityFactory::get(entityManager)->CreateTile(sf::Vector2f(32, 32), sf::Vector2f(100, 100));
 }
 
 
@@ -38,15 +37,15 @@ void Game::run(){
 	}
 }
 
-void Game::initialize(sf::RenderTarget & target)
+void Game::initialize(sf::RenderWindow & target)
 {
-	Keybuffer buffer;
-	Keymap keymap("keys.conf");
-	keymap.load();
+	Keybuffer * buffer = new Keybuffer;
+	Keymap * map = new Keymap("keys.conf");
+	map->load();
 	
-	systemManager.addSystem<ControlSystem>(500, buffer, keymap);
+	systemManager.addSystem<ControlSystem>(10, buffer, map);
 	systemManager.addSystem<CollisionSystem>();
-	systemManager.addSystem<MovementSystem>(10);
+	systemManager.addSystem<MovementSystem>(10, buffer);
 	systemManager.addSystem<RenderSystem>(target);
 	systemManager.configure();
 }
@@ -63,4 +62,7 @@ void Game::update(double dt){
 
 Game::~Game()
 {
+	delete an;
+	delete map;
+	delete buffer;
 }

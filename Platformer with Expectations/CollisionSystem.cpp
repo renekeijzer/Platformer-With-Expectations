@@ -1,12 +1,15 @@
 #include "CollisionSystem.hpp"
 #include "types.h"
 
-CollisionSystem::CollisionSystem()
+CollisionSystem::CollisionSystem(Keybuffer & bfr) : buffer(bfr)
 {
 }
 
 
 void CollisionSystem::update(EntityManager & entities, EventManager & events, double dt){
+	for (Entity & ent : entities.withComponents<UserControlable>()){
+	//	if()predicate(ent);
+	}
 	for (Entity & ent : entities.withComponents<Colidable, Movable>()){
 		Colidable::Handle & colHandle = ent.getComponent<Colidable>();
 		for (Entity & other : entities.withComponents<Colidable>()){
@@ -21,14 +24,50 @@ void CollisionSystem::update(EntityManager & entities, EventManager & events, do
 	}
 }
 
+Colidable::Handle CollisionSystem::predicate(Entity & ent){
+	if (ent.hasComponent<Colidable>()){
+		Colidable::Handle colidable = ent.getComponent<Colidable>();
+		Movable::Handle movHandle = ent.getComponent<Movable>();
+		sf::Vector2f velo = movHandle->getVelocity();
+		if (buffer.size() > 0){
+				switch (buffer.front()->second)
+				{
+				case PWE::PlayerAction::strafeLeft:
+					velo.x = (velo.x > movHandle->getMaxVelocity().x * -1 ?
+						velo.x + movHandle->speed.x * -1 : movHandle->getMaxVelocity().x*-1);
+					break;
+				case PWE::PlayerAction::strafeRight:
+					velo.x = (velo.x > movHandle->getMaxVelocity().x * 1 ?
+						velo.x + movHandle->speed.x * 1 : movHandle->getMaxVelocity().x);
+					break;
+				default:
+					break;
+				}
+				colidable->setPosition(colidable->getPosition().x + velo.x, colidable->getPosition().y);
+				return colidable;
+		}
+		else
+		{ 
+			return colidable; 
+		}
+	}else{
+		return Colidable::Handle();
+	}
+}
 
 
 bool CollisionSystem::Collides(Entity & lhs, Entity & rhs){
 	Colidable::Handle lhsColidable = lhs.getComponent<Colidable>();
 	Colidable::Handle rhsColidable = rhs.getComponent<Colidable>();
 	
-	sf::Rect<float> rect = lhsColidable->getRect();
-	sf::Rect<float> other = rhsColidable->getRect();
+	return Collides(lhsColidable, rhsColidable);
+
+}
+
+
+bool CollisionSystem::Collides(Colidable::Handle & lhs, Colidable::Handle & rhs){
+	sf::Rect<float> rect = lhs->getRect();
+	sf::Rect<float> other = rhs->getRect();
 
 	// Rectangles with negative dimensions are allowed, so we must handle them correctly
 
@@ -61,7 +100,6 @@ bool CollisionSystem::Collides(Entity & lhs, Entity & rhs){
 		return false;
 	}
 }
-
 
 CollisionSystem::~CollisionSystem()
 {

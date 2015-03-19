@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML\Graphics.hpp>
+#include <queue>
 
 #include "TheGrid\NonCopyable.hpp"
 #include "TheGrid\EntityManager.hpp"
@@ -11,7 +12,7 @@
 #include "EntityFactory.hpp"
 #include "MapLoader.hpp"
 
-
+typedef std::queue<KeyMap *> Keybuffer;
 class Game :
 	public NonCopyable
 {
@@ -35,7 +36,7 @@ public:
 	};
 
 private:
-	void initialize(sf::RenderTarget & target);
+	void initialize(sf::RenderWindow & target);
 	void update(double dt);
 	
 
@@ -43,5 +44,7 @@ private:
 	EventManager eventManager;
 	SystemManager systemManager;
 	Analytics * an = nullptr;
+	Keymap * map;
+	Keybuffer * buffer;
 };
 

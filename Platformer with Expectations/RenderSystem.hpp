@@ -9,10 +9,10 @@
 class RenderSystem : public System<RenderSystem>
 {
 public:
-	RenderSystem(sf::RenderTarget & tar) : target(tar){}
+	RenderSystem(sf::RenderWindow & tar) : target(tar){}
 	void configure(EventManager & events) override;
 	void update(EntityManager & entities, EventManager & events, double dt);
 private:
-	sf::RenderTarget & target;
+	sf::RenderWindow & target;
 };
 

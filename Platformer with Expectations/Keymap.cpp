@@ -15,7 +15,6 @@ void Keymap::load(){
 				mapping.push_back(createPair(lines[0], lines[1]));
 			}
 			loaded = true;
-			std::cout << "Keys loaded " << mapping.size();
 		}
 	}
 	catch (std::exception ex){
@@ -24,22 +23,22 @@ void Keymap::load(){
 
 }
 
-Keymap::KeyMap Keymap::createPair(std::string key, std::string action){
-	KeyMap pair;
+KeyMap * Keymap::createPair(std::string key, std::string action){
+	KeyMap * pair = new KeyMap;
 	sf::Keyboard::Key temp = (sf::Keyboard::Key)stoi(key);
-	pair.first = temp;
+	pair->first = temp;
 	switch (stoi(action)){
 	case 1:
-		pair.second = PWE::PlayerAction::strafeLeft;
+		pair->second = PWE::PlayerAction::strafeLeft;
 		break;
 	case 2:
-		pair.second = PWE::PlayerAction::strafeRight;
+		pair->second = PWE::PlayerAction::strafeRight;
 		break;
 	case 3:
-		pair.second = PWE::PlayerAction::jump;
+		pair->second = PWE::PlayerAction::jump;
 		break;
 	case 4:
-		pair.second = PWE::PlayerAction::duck;
+		pair->second = PWE::PlayerAction::duck;
 		break;
 	case 5:
 		break;
@@ -53,7 +52,7 @@ Keymap::KeyMap Keymap::createPair(std::string key, std::string action){
 
 	return pair;
 }
-Keymap::KeyMap Keymap::createPair(sf::Keyboard::Key key, PWE::PlayerAction action){
+KeyMap Keymap::createPair(sf::Keyboard::Key key, PWE::PlayerAction action){
 
 }
 

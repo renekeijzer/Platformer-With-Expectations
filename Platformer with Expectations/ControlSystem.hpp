@@ -8,20 +8,21 @@
 
 #include "Components.hpp"
 #include "types.h"
-#include "Keybuffer.hpp"
 #include "Keymap.hpp"
 
+#include <queue>
 
+typedef std::queue<KeyMap *> Keybuffer;
 class ControlSystem : public System<ControlSystem>
 {
 public:
-	ControlSystem(double intr, Keybuffer & key, Keymap & keymap) 
+	ControlSystem(double intr, Keybuffer * key, Keymap * keymap) 
 		: System<ControlSystem>(intr), keybuffer(key), keys(keymap){  }
 	void configure(EventManager & events) override;
 	void update(EntityManager & entities, EventManager & events, double dt);
 	~ControlSystem();
 private:
-	Keymap & keys;
-	Keybuffer &keybuffer;
+	Keymap * keys;
+	Keybuffer * keybuffer;
 };
 

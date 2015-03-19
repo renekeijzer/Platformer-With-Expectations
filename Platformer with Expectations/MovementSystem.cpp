@@ -53,8 +53,9 @@ void MovementSystem::handleCollisions(EntityManager & entities){
 }
 
 void MovementSystem::update(EntityManager & entities, EventManager & events, double dt){
-	if (elaspedTime + interval > dt){
-		return;
+	for(Entity & entity : entities.withComponents<UserControlable>())
+	{
+		updateMovement(entity);
 	}
 	handleCollisions(entities);
 	for (Entity & ent : entities.withComponents<Movable>()){
@@ -63,10 +64,6 @@ void MovementSystem::update(EntityManager & entities, EventManager & events, dou
 		updatePosition(ent);
 		
 	}
-
-
-
-	elaspedTime = dt;
 }
 
 
@@ -90,6 +87,43 @@ void MovementSystem::updateGravity(Entity & ent){
 			mov->setVelocity(sf::Vector2f(mov->getVelocity().x, mov->getVelocity().y + grav->getFalling()));
 		}
 	}
+}
+
+void MovementSystem::updateMovement(Entity & id){
+	/* check if we need to use keybuffer or ai component */
+	if (id.hasComponent<UserControlable>()){
+		Movable::Handle movHandle = id.getComponent<Movable>();
+		sf::Vector2f velo = movHandle->getVelocity();
+		if (keybuffer->size() > 0){
+			switch (keybuffer->front()->second)
+			{
+			case PWE::PlayerAction::strafeLeft:
+				velo.x = (velo.x > movHandle->getMaxVelocity().x * -1 ?
+					velo.x + movHandle->speed.x * -1 : movHandle->getMaxVelocity().x*-1);
+			break;
+			case PWE::PlayerAction::strafeRight:
+				velo.x = (velo.x > movHandle->getMaxVelocity().x * 1 ?
+					velo.x + movHandle->speed.x * 1 : movHandle->getMaxVelocity().x);
+				break;
+			case PWE::PlayerAction::duck:
+				break;
+			case PWE::PlayerAction::jump:
+				break;
+			default:
+				break;
+			}
+			keybuffer->pop();
+		}else{
+
+			if (velo.x > -1 && velo.x < 1){ velo.x = 0; }
+			if (velo.x >= 1){ velo.x -= 0.5f; }
+			if (velo.x <= -1){ velo.x += 0.5f; }
+		}
+		movHandle->setVelocity(velo);
+
+
+	}
+
 }
 
 void MovementSystem::receive(const CollisionEvent & event){
