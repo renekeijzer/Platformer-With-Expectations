@@ -32,6 +32,6 @@ private:
 	void updateMovement(Entity & id);
 
 	std::stack<std::pair<EntityId, EntityId>> colidedEntities;
-	Keybuffer * keybuffer = nullptr;
+	Keybuffer * keybuffer;
 };
 

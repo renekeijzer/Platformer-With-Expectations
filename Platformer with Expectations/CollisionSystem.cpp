@@ -1,14 +1,16 @@
 #include "CollisionSystem.hpp"
-#include "types.h"
 
-CollisionSystem::CollisionSystem(Keybuffer & bfr) : buffer(bfr)
-{
-}
+
 
 
 void CollisionSystem::update(EntityManager & entities, EventManager & events, double dt){
 	for (Entity & ent : entities.withComponents<UserControlable>()){
-	//	if()predicate(ent);
+		for (Entity & oth: entities.withComponents<Colidable>()){
+			Colidable::Handle otherhandle = oth.getComponent<Colidable>();
+			if (Collides(otherhandle, predicate(ent))){
+				keybuffer->pop();
+			}
+		}
 	}
 	for (Entity & ent : entities.withComponents<Colidable, Movable>()){
 		Colidable::Handle & colHandle = ent.getComponent<Colidable>();
@@ -24,13 +26,17 @@ void CollisionSystem::update(EntityManager & entities, EventManager & events, do
 	}
 }
 
+
+void CollisionSystem::configure(EventManager & event){}
 Colidable::Handle CollisionSystem::predicate(Entity & ent){
+
 	if (ent.hasComponent<Colidable>()){
 		Colidable::Handle colidable = ent.getComponent<Colidable>();
 		Movable::Handle movHandle = ent.getComponent<Movable>();
 		sf::Vector2f velo = movHandle->getVelocity();
-		if (buffer.size() > 0){
-				switch (buffer.front()->second)
+		if (keybuffer->size() > 0){
+			std::cout << keybuffer->size() << "\r\n";
+			switch (keybuffer->front()->second)
 				{
 				case PWE::PlayerAction::strafeLeft:
 					velo.x = (velo.x > movHandle->getMaxVelocity().x * -1 ?

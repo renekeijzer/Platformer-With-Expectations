@@ -44,7 +44,7 @@ void Game::initialize(sf::RenderWindow & target)
 	map->load();
 	
 	systemManager.addSystem<ControlSystem>(10, buffer, map);
-	systemManager.addSystem<CollisionSystem>();
+	systemManager.addSystem<CollisionSystem>(2,buffer);
 	systemManager.addSystem<MovementSystem>(10, buffer);
 	systemManager.addSystem<RenderSystem>(target);
 	systemManager.configure();
