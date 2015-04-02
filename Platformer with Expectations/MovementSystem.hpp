@@ -11,13 +11,12 @@
 #include "Components.hpp"
 #include "Events.hpp"
 #include "Keymap.hpp"
-
-typedef std::queue<KeyMap *> Keybuffer;
+#include "Keybuffer.hpp"
 
 class MovementSystem : public System<MovementSystem>, public Receiver<MovementSystem>
 {
 public:
-	MovementSystem(double intr, Keybuffer * buf) : System(intr), keybuffer(buf){}
+	MovementSystem(double intr, Keybuffer<KeyMap> & buf) : System(intr), keybuffer(buf)  {  }
 	void configure(EventManager & events) override;
 	void update(EntityManager & entities, EventManager & events, double dt);
 	sf::Vector2f calculateIdleMovement(sf::Vector2f speed);
@@ -32,6 +31,7 @@ private:
 	void updateMovement(Entity & id);
 
 	std::stack<std::pair<EntityId, EntityId>> colidedEntities;
-	Keybuffer * keybuffer;
+	Keybuffer<KeyMap> & keybuffer;
+
 };
 

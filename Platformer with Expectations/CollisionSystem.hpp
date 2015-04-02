@@ -6,17 +6,17 @@
 #include "types.h"
 #include "Components.hpp"
 #include "Events.hpp"
+#include "Keybuffer.hpp"
 
 #include <algorithm>
 #include <queue>
 
-typedef std::queue<KeyMap *> Keybuffer;
 
 class CollisionSystem : public System<CollisionSystem>
 {
 public:
-	CollisionSystem(double intr, Keybuffer * buffer) : System(intr), keybuffer(buffer){ std::cout << "bufferSize: " << keybuffer->size() << "\r\n"; }
-	void update(EntityManager & entities, EventManager & events, double dt);
+	CollisionSystem(double intr, Keybuffer<KeyMap> & buffer) : System(intr), keybuffer(buffer){ std::cout << "bufferSize: " << keybuffer.size() << "\r\n"; }
+	void update(EntityManager & entities, EventManager & events, double dt) override;
 	void configure(EventManager & events) override;
 	bool Collides(Entity & lhs, Entity & rhs);
 	bool Collides(Colidable::Handle & lhs, Colidable::Handle & rhs);
@@ -25,6 +25,6 @@ public:
 private:
 
 	Colidable::Handle predicate(Entity & ent);
-	Keybuffer * keybuffer;
+	Keybuffer<KeyMap> & keybuffer;
 };
 

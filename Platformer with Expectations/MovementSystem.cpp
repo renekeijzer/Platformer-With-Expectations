@@ -94,8 +94,9 @@ void MovementSystem::updateMovement(Entity & id){
 	if (id.hasComponent<UserControlable>()){
 		Movable::Handle movHandle = id.getComponent<Movable>();
 		sf::Vector2f velo = movHandle->getVelocity();
-		if (keybuffer->size() > 0){
-			switch (keybuffer->front()->second)
+		if (!keybuffer.isEmpty()){
+			std::cout << keybuffer.peek().second;
+			switch (keybuffer.peek().second)
 			{
 			case PWE::PlayerAction::strafeLeft:
 				velo.x = (velo.x > movHandle->getMaxVelocity().x * -1 ?
@@ -112,7 +113,7 @@ void MovementSystem::updateMovement(Entity & id){
 			default:
 				break;
 			}
-			keybuffer->pop();
+			keybuffer.pop();
 		}else{
 
 			if (velo.x > -1 && velo.x < 1){ velo.x = 0; }

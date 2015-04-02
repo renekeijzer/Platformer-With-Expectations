@@ -1,5 +1,7 @@
 #pragma once
 #include <SFML\Graphics.hpp>
+#include <iostream>
+
 #include "TheGrid\Component.hpp"
 #include "types.h"
 struct Colidable : public Component<Colidable>
@@ -53,3 +55,7 @@ private:
 	sf::Rect<float> collisionRect;
 	PWE::CollisionMap map = 0;
 };
+
+ostream & operator<<(ostream){
+
+}

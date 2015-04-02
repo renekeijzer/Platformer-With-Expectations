@@ -7,8 +7,12 @@ void CollisionSystem::update(EntityManager & entities, EventManager & events, do
 	for (Entity & ent : entities.withComponents<UserControlable>()){
 		for (Entity & oth: entities.withComponents<Colidable>()){
 			Colidable::Handle otherhandle = oth.getComponent<Colidable>();
-			if (Collides(otherhandle, predicate(ent))){
-				keybuffer->pop();
+			if (!keybuffer.isEmpty()){
+				if (Collides(otherhandle, predicate(ent))){
+
+					std::cout << "popped key:" << keybuffer.peek().first << "\r\n";
+					keybuffer.pop();
+				}
 			}
 		}
 	}
@@ -27,16 +31,16 @@ void CollisionSystem::update(EntityManager & entities, EventManager & events, do
 }
 
 
-void CollisionSystem::configure(EventManager & event){}
+void CollisionSystem::configure(EventManager & event){  }
 Colidable::Handle CollisionSystem::predicate(Entity & ent){
 
 	if (ent.hasComponent<Colidable>()){
 		Colidable::Handle colidable = ent.getComponent<Colidable>();
 		Movable::Handle movHandle = ent.getComponent<Movable>();
 		sf::Vector2f velo = movHandle->getVelocity();
-		if (keybuffer->size() > 0){
-			std::cout << keybuffer->size() << "\r\n";
-			switch (keybuffer->front()->second)
+
+		if (!keybuffer.isEmpty()){
+			switch (keybuffer.peek().second)
 				{
 				case PWE::PlayerAction::strafeLeft:
 					velo.x = (velo.x > movHandle->getMaxVelocity().x * -1 ?

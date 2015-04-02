@@ -16,6 +16,7 @@
     <ClCompile Include="ControlSystem.cpp" />
     <ClCompile Include="EntityFactory.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Keybuffer.cpp" />
     <ClCompile Include="Keymap.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MapLoader.cpp" />
@@ -38,6 +39,7 @@
     <ClInclude Include="CollisionSystem.hpp" />
     <ClInclude Include="Config.hpp" />
     <ClInclude Include="FileNotfound.h" />
+    <ClInclude Include="Keybuffer.hpp" />
     <ClInclude Include="Keymap.hpp" />
     <ClInclude Include="types.h" />
     <ClInclude Include="Components.hpp" />

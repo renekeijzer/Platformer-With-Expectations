@@ -94,6 +94,7 @@
     <ClCompile Include="Keymap.cpp">
       <Filter>Game\Util</Filter>
     </ClCompile>
+    <ClCompile Include="Keybuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TheGrid\Analytics.hpp">
@@ -225,5 +226,6 @@
     <ClInclude Include="Keymap.hpp">
       <Filter>Game\Util</Filter>
     </ClInclude>
+    <ClInclude Include="Keybuffer.hpp" />
   </ItemGroup>
 </Project>

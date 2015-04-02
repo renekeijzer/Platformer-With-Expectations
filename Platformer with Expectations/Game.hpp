@@ -10,9 +10,9 @@
 
 #include "Systems.hpp"
 #include "EntityFactory.hpp"
+#include "Keybuffer.hpp"
 #include "MapLoader.hpp"
 
-typedef std::queue<KeyMap *> Keybuffer;
 class Game :
 	public NonCopyable
 {
@@ -45,6 +45,6 @@ private:
 	SystemManager systemManager;
 	Analytics * an = nullptr;
 	Keymap * map;
-	Keybuffer * buffer;
+	Keybuffer<KeyMap> buffer;
 };
 

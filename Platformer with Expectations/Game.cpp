@@ -1,7 +1,8 @@
 #include "Game.hpp"
 
-Game::Game() :  systemManager(entityManager, eventManager)
+Game::Game() : systemManager(entityManager, eventManager)
 {
+
 	an = Analytics::get(entityManager, systemManager, eventManager);
 	EntityFactory::get(entityManager)->CreatePlayer(sf::Vector2f(100,100));
 	MapLoader * loader = MapLoader::createInstance(entityManager);
@@ -39,9 +40,10 @@ void Game::run(){
 
 void Game::initialize(sf::RenderWindow & target)
 {
-	Keybuffer * buffer = new Keybuffer;
-	Keymap * map = new Keymap("keys.conf");
+	
+	map = new Keymap("keys.conf");
 	map->load();
+
 	
 	systemManager.addSystem<ControlSystem>(10, buffer, map);
 	systemManager.addSystem<CollisionSystem>(2,buffer);
@@ -64,5 +66,4 @@ Game::~Game()
 {
 	delete an;
 	delete map;
-	delete buffer;
 }
