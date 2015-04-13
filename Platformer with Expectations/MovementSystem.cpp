@@ -57,7 +57,7 @@ void MovementSystem::update(EntityManager & entities, EventManager & events, dou
 	{
 		updateMovement(entity);
 	}
-	handleCollisions(entities);
+	//handleCollisions(entities);
 	for (Entity & ent : entities.withComponents<Movable>()){
 		updateGravity(ent);
 		updateCollision(ent);
@@ -74,9 +74,7 @@ void MovementSystem::updatePosition(Entity & ent){
 
 void MovementSystem::updateCollision(Entity & ent){
 	if (ent.hasComponent<Colidable>()){
-		Movable::Handle & mov = ent.getComponent<Movable>();
-		Colidable::Handle & handle = ent.getComponent<Colidable>();
-		handle->setPosition(mov->getPosition());
+		ent.getComponent<Colidable>()->setPosition(ent.getComponent<Movable>()->getPosition());
 	}
 }
 void MovementSystem::updateGravity(Entity & ent){
@@ -95,7 +93,6 @@ void MovementSystem::updateMovement(Entity & id){
 		Movable::Handle movHandle = id.getComponent<Movable>();
 		sf::Vector2f velo = movHandle->getVelocity();
 		if (!keybuffer.isEmpty()){
-			std::cout << keybuffer.peek().second;
 			switch (keybuffer.peek().second)
 			{
 			case PWE::PlayerAction::strafeLeft:

@@ -37,7 +37,6 @@
   <ItemGroup>
     <ClInclude Include="CollisionEvent.hpp" />
     <ClInclude Include="CollisionSystem.hpp" />
-    <ClInclude Include="Config.hpp" />
     <ClInclude Include="FileNotfound.h" />
     <ClInclude Include="Keybuffer.hpp" />
     <ClInclude Include="Keymap.hpp" />

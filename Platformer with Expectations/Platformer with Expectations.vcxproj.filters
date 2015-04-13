@@ -94,7 +94,9 @@
     <ClCompile Include="Keymap.cpp">
       <Filter>Game\Util</Filter>
     </ClCompile>
-    <ClCompile Include="Keybuffer.cpp" />
+    <ClCompile Include="Keybuffer.cpp">
+      <Filter>Game\Util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TheGrid\Analytics.hpp">
@@ -217,15 +219,14 @@
     <ClInclude Include="types.h">
       <Filter>Game\Util</Filter>
     </ClInclude>
-    <ClInclude Include="Config.hpp">
-      <Filter>Game\Util</Filter>
-    </ClInclude>
     <ClInclude Include="FileNotfound.h">
       <Filter>Game\Util\Exceptions</Filter>
     </ClInclude>
     <ClInclude Include="Keymap.hpp">
       <Filter>Game\Util</Filter>
     </ClInclude>
-    <ClInclude Include="Keybuffer.hpp" />
+    <ClInclude Include="Keybuffer.hpp">
+      <Filter>Game\Util</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

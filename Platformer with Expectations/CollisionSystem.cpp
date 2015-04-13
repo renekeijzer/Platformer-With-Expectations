@@ -6,12 +6,61 @@
 void CollisionSystem::update(EntityManager & entities, EventManager & events, double dt){
 	for (Entity & ent : entities.withComponents<UserControlable>()){
 		for (Entity & oth: entities.withComponents<Colidable>()){
-			Colidable::Handle otherhandle = oth.getComponent<Colidable>();
-			if (!keybuffer.isEmpty()){
-				if (Collides(otherhandle, predicate(ent))){
+			if (oth != ent){
+				Colidable::Handle otherhandle = oth.getComponent<Colidable>();
+				sf::Rect<float> colRect = Collides(otherhandle, predicate(ent));
+				if (colRect.height != 0 || colRect.width != 0 ){
+						std::cout << "Colided with: " << otherhandle->toString() << " - ent: " << predicate(ent)->toString() << "\r\n";
+						std::cout << "Collision rect: {(" << colRect.left << "," << colRect.top << "), " << round(colRect.width) << ", " << colRect.height << "}" << std::endl << std::endl;
+						Movable::Handle mov = ent.getComponent<Movable>();
+						sf::Vector2f currentVel = mov->getVelocity();
+						
+						if (colRect.height > 0){
+							if (currentVel.y < 0){
+								std::cout << "correcting movement with y: " << round(colRect.height)/2 << std::endl;
+								mov->setVelocity(currentVel.x, currentVel.y + round(colRect.height)/2);
+								ent.getComponent<Gravity>()->setFalling(false);
 
-					std::cout << "popped key:" << keybuffer.peek().first << "\r\n";
-					keybuffer.pop();
+							}
+							else if (currentVel.y > 0) {
+								std::cout << "correcting movement with y: " << round(colRect.height)/2 << std::endl;
+								mov->setVelocity(currentVel.x, currentVel.y - round(colRect.height)/2);
+								ent.getComponent<Gravity>()->setFalling(true);
+
+							}
+							else{
+								std::cout << "correcting movement with y: " << round(colRect.height) << std::endl;
+								mov->setVelocity(currentVel.x, currentVel.y + round(colRect.height));
+
+							}
+						}
+
+						
+						if (mov->getVelocity().x > 0){
+							std::cout << "correcting movement with: " << round(colRect.width) << std::endl;
+							mov->setVelocity(currentVel.x - round(colRect.width)/2, currentVel.y);
+							if (!keybuffer.isEmpty()){
+								keybuffer.pop();
+							}
+						}
+						else if(mov->getVelocity().x < 0){
+							std::cout << "correcting movement with: " << round(colRect.width) << std::endl;
+
+							mov->setVelocity(currentVel.x + round(colRect.width)/2, currentVel.y);
+
+							if (!keybuffer.isEmpty()){
+								keybuffer.pop();
+							}
+						}
+						else
+						{
+							mov->setVelocity(0, mov->getVelocity().y);
+						}
+
+					
+				}
+				else{
+					ent.getComponent<Gravity>()->setFalling(true);
 				}
 			}
 		}
@@ -22,7 +71,7 @@ void CollisionSystem::update(EntityManager & entities, EventManager & events, do
 			if (ent != other){
 				Colidable::Handle & otherHandle = other.getComponent<Colidable>();
 
-				if (Collides(ent, other)){
+				if (Collides(ent, other).width > 0 && Collides(ent,other).height > 0){
 					events.emit<CollisionEvent>(ent, other);
 				}
 			}
@@ -53,6 +102,13 @@ Colidable::Handle CollisionSystem::predicate(Entity & ent){
 				default:
 					break;
 				}
+			if (ent.hasComponent<Gravity>()){
+				Gravity::Handle grav = ent.getComponent<Gravity>();
+				if (grav->isFalling()){
+					velo.y += grav->getFalling();
+				}
+			}
+				
 				colidable->setPosition(colidable->getPosition().x + velo.x, colidable->getPosition().y);
 				return colidable;
 		}
@@ -66,7 +122,7 @@ Colidable::Handle CollisionSystem::predicate(Entity & ent){
 }
 
 
-bool CollisionSystem::Collides(Entity & lhs, Entity & rhs){
+sf::Rect<float> CollisionSystem::Collides(Entity & lhs, Entity & rhs){
 	Colidable::Handle lhsColidable = lhs.getComponent<Colidable>();
 	Colidable::Handle rhsColidable = rhs.getComponent<Colidable>();
 	
@@ -75,7 +131,7 @@ bool CollisionSystem::Collides(Entity & lhs, Entity & rhs){
 }
 
 
-bool CollisionSystem::Collides(Colidable::Handle & lhs, Colidable::Handle & rhs){
+sf::Rect<float> CollisionSystem::Collides(Colidable::Handle & lhs, Colidable::Handle & rhs){
 	sf::Rect<float> rect = lhs->getRect();
 	sf::Rect<float> other = rhs->getRect();
 
@@ -102,12 +158,11 @@ bool CollisionSystem::Collides(Colidable::Handle & lhs, Colidable::Handle & rhs)
 	// If the intersection is valid (positive non zero area), then there is an intersection
 	if ((interLeft < interRight) && (interTop < interBottom))
 	{
-
-		return true;
+		return sf::Rect<float>(interTop, interLeft, interRight - interLeft, interBottom - interTop);
 	}
 	else
 	{
-		return false;
+		return sf::Rect<float>(0,0,0,0);
 	}
 }
 

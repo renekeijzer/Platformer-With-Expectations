@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML\Graphics.hpp>
 #include <iostream>
+#include <sstream>
 
 #include "TheGrid\Component.hpp"
 #include "types.h"
@@ -50,12 +51,21 @@ struct Colidable : public Component<Colidable>
 		return map;
 	}
 
+	std::string toString() override {
+		std::stringstream output;
+		output << "({" << collisionRect.left << ", " << collisionRect.top << "), "<< collisionRect.width << ", " << collisionRect.height << "}";
+		return output.str();
+	}
+
+	bool operator==(Colidable & other){
+		return other.collisionRect == collisionRect;
+	}
+	bool operator !=(Colidable & other){
+		return other.collisionRect != collisionRect;
+	}
+
 
 private:
 	sf::Rect<float> collisionRect;
 	PWE::CollisionMap map = 0;
 };
-
-ostream & operator<<(ostream){
-
-}

@@ -1,6 +1,7 @@
 #pragma once
 #include "TheGrid\EventManager.hpp"
 #include "TheGrid\EntityManager.hpp"
+#include <SFML\Graphics.hpp>
 
 #include "Keymap.hpp"
 #include "types.h"
@@ -15,11 +16,11 @@
 class CollisionSystem : public System<CollisionSystem>
 {
 public:
-	CollisionSystem(double intr, Keybuffer<KeyMap> & buffer) : System(intr), keybuffer(buffer){ std::cout << "bufferSize: " << keybuffer.size() << "\r\n"; }
+	CollisionSystem(double intr, Keybuffer<KeyMap> & buffer) : System(intr), keybuffer(buffer){ }
 	void update(EntityManager & entities, EventManager & events, double dt) override;
 	void configure(EventManager & events) override;
-	bool Collides(Entity & lhs, Entity & rhs);
-	bool Collides(Colidable::Handle & lhs, Colidable::Handle & rhs);
+	sf::Rect<float> Collides(Entity & lhs, Entity & rhs);
+	sf::Rect<float> Collides(Colidable::Handle & lhs, Colidable::Handle & rhs);
 
 	~CollisionSystem();
 private:
