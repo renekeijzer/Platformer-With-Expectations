@@ -7,6 +7,13 @@
 #include "types.h"
 struct Colidable : public Component<Colidable>
 {
+	enum CollisionSide{
+		left = 0,
+		right = 1,
+		up = 2, 
+		down = 3,
+	};
+
 	Colidable(){}
 	Colidable(sf::Rect<float> pos) : collisionRect(pos){}
 	Colidable(sf::Vector2f position, sf::Vector2f dim) : collisionRect(position, dim){}
@@ -27,24 +34,17 @@ struct Colidable : public Component<Colidable>
 		collisionRect.left = x;
 	}
 
-	void setCollision(std::bitset<4> cMap){
-		map = cMap;
+	void setCollision(bool col, CollisionSide side){
+		if (col){
+			map |= (col << side);
+		}
+		else{
+			map &= ~(col << side);
+		}
 	}
 
-	bool getCollisionX(){
-		return map.at(0);
-	}
-
-	bool getCollisionXY(){
-		return map.at(1);
-	}
-
-	bool getCollisionYX(){
-		return map.at(2);
-	}
-
-	bool getCollisionY(){
-		return map.at(3);
+	bool getCollision(CollisionSide side){
+		return map.at(side);
 	}
 
 	PWE::CollisionMap getCollision(){

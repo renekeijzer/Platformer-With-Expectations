@@ -48,7 +48,7 @@ void MovementSystem::handleCollisions(EntityManager & entities){
 		}
 
 		colidedEntities.pop();
-
+		
 	}
 }
 
@@ -59,7 +59,7 @@ void MovementSystem::update(EntityManager & entities, EventManager & events, dou
 	}
 	//handleCollisions(entities);
 	for (Entity & ent : entities.withComponents<Movable>()){
-		updateGravity(ent);
+		//updateGravity(ent);
 		updateCollision(ent);
 		updatePosition(ent);
 		

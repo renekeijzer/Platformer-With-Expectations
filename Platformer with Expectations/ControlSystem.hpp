@@ -20,6 +20,7 @@ public:
 		: System<ControlSystem>(intr), keybuffer(key), keys(keymap){  }
 	void configure(EventManager & events) override;
 	void update(EntityManager & entities, EventManager & events, double dt);
+	bool checkPossibleMovement(sf::Keyboard::Key key, EntityManager & entities); 
 	~ControlSystem();
 private:
 	Keymap * keys;

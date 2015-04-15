@@ -9,13 +9,17 @@ void CollisionSystem::update(EntityManager & entities, EventManager & events, do
 			if (oth != ent){
 				Colidable::Handle otherhandle = oth.getComponent<Colidable>();
 				sf::Rect<float> colRect = Collides(otherhandle, predicate(ent));
+				Colidable::Handle col = ent.getComponent<Colidable>();
+
 				if (colRect.height != 0 || colRect.width != 0 ){
 						std::cout << "Colided with: " << otherhandle->toString() << " - ent: " << predicate(ent)->toString() << "\r\n";
 						std::cout << "Collision rect: {(" << colRect.left << "," << colRect.top << "), " << round(colRect.width) << ", " << colRect.height << "}" << std::endl << std::endl;
 						Movable::Handle mov = ent.getComponent<Movable>();
 						sf::Vector2f currentVel = mov->getVelocity();
+						sf::Vector2f currentPos = mov->getPosition();
 						
-						if (colRect.height > 0){
+						
+						if (colRect.height !=  ent.getComponent<Colidable>()->getRect().height && colRect.height !=0){
 							if (currentVel.y < 0){
 								std::cout << "correcting movement with y: " << round(colRect.height)/2 << std::endl;
 								mov->setVelocity(currentVel.x, currentVel.y + round(colRect.height)/2);
@@ -38,28 +42,37 @@ void CollisionSystem::update(EntityManager & entities, EventManager & events, do
 						
 						if (mov->getVelocity().x > 0){
 							std::cout << "correcting movement with: " << round(colRect.width) << std::endl;
-							mov->setVelocity(currentVel.x - round(colRect.width)/2, currentVel.y);
+							//mov->setVelocity(currentVel.x - round(colRect.width)/2, currentVel.y);
+							col->setCollision(true, Colidable::CollisionSide::right);
+							mov->setVelocity(0, currentVel.y);
+							
 							if (!keybuffer.isEmpty()){
 								keybuffer.pop();
 							}
 						}
-						else if(mov->getVelocity().x < 0){
+						else{
+							col->setCollision(false, Colidable::CollisionSide::right);
+						
+						}
+
+						if(mov->getVelocity().x < 0){
 							std::cout << "correcting movement with: " << round(colRect.width) << std::endl;
-
-							mov->setVelocity(currentVel.x + round(colRect.width)/2, currentVel.y);
-
+							col->setCollision(true, Colidable::CollisionSide::left);
+							//mov->setPosition(currentVel.x + round(colRect.width)/2, currentVel.y);
+							mov->setVelocity(0, currentVel.y);
 							if (!keybuffer.isEmpty()){
 								keybuffer.pop();
 							}
 						}
-						else
-						{
-							mov->setVelocity(0, mov->getVelocity().y);
+						else{
+							col->setCollision(false, Colidable::CollisionSide::left);
 						}
 
 					
 				}
 				else{
+					col->setCollision(false, Colidable::CollisionSide::left);
+					col->setCollision(false, Colidable::CollisionSide::right);
 					ent.getComponent<Gravity>()->setFalling(true);
 				}
 			}
