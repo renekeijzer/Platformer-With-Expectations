@@ -7,3 +7,4 @@
 #include "Gravity.hpp"
 #include "Focussable.hpp"
 #include "Flag.hpp"
+#include "PhysicalComponent.hpp"

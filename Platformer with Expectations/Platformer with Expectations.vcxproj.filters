@@ -228,5 +228,8 @@
     <ClInclude Include="Keybuffer.hpp">
       <Filter>Game\Util</Filter>
     </ClInclude>
+    <ClInclude Include="PhysicalComponent.hpp">
+      <Filter>Game\Components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

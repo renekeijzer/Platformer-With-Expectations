@@ -29,6 +29,7 @@ void EntityFactory::CreatePlayer(sf::Vector2f position){
 
 	sf::Rect<float> cRect(position, sf::Vector2f(32,32));
 	player.addComponent<Colidable>(cRect);
+	player.addComponent<PhysicalComponent>(player.getComponent<Colidable>(), player.getComponent<Movable>());
 }
 
 void EntityFactory::CreateTile(sf::Vector2f pos, sf::Vector2f size){

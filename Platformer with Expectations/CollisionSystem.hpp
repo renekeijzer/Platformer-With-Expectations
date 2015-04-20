@@ -19,8 +19,10 @@ public:
 	CollisionSystem(double intr, Keybuffer<KeyMap> & buffer) : System(intr), keybuffer(buffer){ }
 	void update(EntityManager & entities, EventManager & events, double dt) override;
 	void configure(EventManager & events) override;
-	sf::Rect<float> Collides(Entity & lhs, Entity & rhs);
-	sf::Rect<float> Collides(Colidable::Handle & lhs, Colidable::Handle & rhs);
+	static sf::Rect<float> Collides(Entity & lhs, Entity & rhs);
+	static sf::Rect<float> Collides(Colidable::Handle & lhs, Colidable::Handle & rhs);
+	static sf::Rect<float> Collides(Colidable & lhs, Colidable & rhs);
+	static sf::Rect<float> Collides(sf::Rect<float>left, sf::Rect<float>right);
 
 	~CollisionSystem();
 private:

@@ -35,12 +35,7 @@ struct Colidable : public Component<Colidable>
 	}
 
 	void setCollision(bool col, CollisionSide side){
-		if (col){
-			map |= (col << side);
-		}
-		else{
-			map &= ~(col << side);
-		}
+		map[side] = col;
 	}
 
 	bool getCollision(CollisionSide side){

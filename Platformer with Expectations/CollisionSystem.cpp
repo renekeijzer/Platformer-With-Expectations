@@ -4,81 +4,17 @@
 
 
 void CollisionSystem::update(EntityManager & entities, EventManager & events, double dt){
-	for (Entity & ent : entities.withComponents<UserControlable>()){
+	sf::Rect<float> * CollisionRect = new sf::Rect<float>();
+	for (Entity & ent : entities.withComponents<UserControlable, PhysicalComponent>()){
 		for (Entity & oth: entities.withComponents<Colidable>()){
-			if (oth != ent){
-				Colidable::Handle otherhandle = oth.getComponent<Colidable>();
-				sf::Rect<float> colRect = Collides(otherhandle, predicate(ent));
-				Colidable::Handle col = ent.getComponent<Colidable>();
-
-				if (colRect.height != 0 || colRect.width != 0 ){
-						std::cout << "Colided with: " << otherhandle->toString() << " - ent: " << predicate(ent)->toString() << "\r\n";
-						std::cout << "Collision rect: {(" << colRect.left << "," << colRect.top << "), " << round(colRect.width) << ", " << colRect.height << "}" << std::endl << std::endl;
-						Movable::Handle mov = ent.getComponent<Movable>();
-						sf::Vector2f currentVel = mov->getVelocity();
-						sf::Vector2f currentPos = mov->getPosition();
-						
-						
-						if (colRect.height !=  ent.getComponent<Colidable>()->getRect().height && colRect.height !=0){
-							if (currentVel.y < 0){
-								std::cout << "correcting movement with y: " << round(colRect.height)/2 << std::endl;
-								mov->setVelocity(currentVel.x, currentVel.y + round(colRect.height)/2);
-								ent.getComponent<Gravity>()->setFalling(false);
-
-							}
-							else if (currentVel.y > 0) {
-								std::cout << "correcting movement with y: " << round(colRect.height)/2 << std::endl;
-								mov->setVelocity(currentVel.x, currentVel.y - round(colRect.height)/2);
-								ent.getComponent<Gravity>()->setFalling(true);
-
-							}
-							else{
-								std::cout << "correcting movement with y: " << round(colRect.height) << std::endl;
-								mov->setVelocity(currentVel.x, currentVel.y + round(colRect.height));
-
-							}
-						}
-
-						
-						if (mov->getVelocity().x > 0){
-							std::cout << "correcting movement with: " << round(colRect.width) << std::endl;
-							//mov->setVelocity(currentVel.x - round(colRect.width)/2, currentVel.y);
-							col->setCollision(true, Colidable::CollisionSide::right);
-							mov->setVelocity(0, currentVel.y);
-							
-							if (!keybuffer.isEmpty()){
-								keybuffer.pop();
-							}
-						}
-						else{
-							col->setCollision(false, Colidable::CollisionSide::right);
-						
-						}
-
-						if(mov->getVelocity().x < 0){
-							std::cout << "correcting movement with: " << round(colRect.width) << std::endl;
-							col->setCollision(true, Colidable::CollisionSide::left);
-							//mov->setPosition(currentVel.x + round(colRect.width)/2, currentVel.y);
-							mov->setVelocity(0, currentVel.y);
-							if (!keybuffer.isEmpty()){
-								keybuffer.pop();
-							}
-						}
-						else{
-							col->setCollision(false, Colidable::CollisionSide::left);
-						}
-
-					
-				}
-				else{
-					col->setCollision(false, Colidable::CollisionSide::left);
-					col->setCollision(false, Colidable::CollisionSide::right);
-					ent.getComponent<Gravity>()->setFalling(true);
-				}
+			
+			if (ent.getComponent<PhysicalComponent>()->willColide(oth, CollisionRect)){
+				ent.getComponent<PhysicalComponent>()->fixMovement(*CollisionRect);
 			}
 		}
 	}
-	for (Entity & ent : entities.withComponents<Colidable, Movable>()){
+	delete CollisionRect;
+	for (Entity & ent : entities.withComponents<PhysicalComponent>()){
 		Colidable::Handle & colHandle = ent.getComponent<Colidable>();
 		for (Entity & other : entities.withComponents<Colidable>()){
 			if (ent != other){
@@ -124,6 +60,7 @@ Colidable::Handle CollisionSystem::predicate(Entity & ent){
 				
 				colidable->setPosition(colidable->getPosition().x + velo.x, colidable->getPosition().y);
 				return colidable;
+				
 		}
 		else
 		{ 
@@ -143,11 +80,18 @@ sf::Rect<float> CollisionSystem::Collides(Entity & lhs, Entity & rhs){
 
 }
 
-
 sf::Rect<float> CollisionSystem::Collides(Colidable::Handle & lhs, Colidable::Handle & rhs){
 	sf::Rect<float> rect = lhs->getRect();
 	sf::Rect<float> other = rhs->getRect();
+	return Collides(rect, other);
+}
+sf::Rect<float> CollisionSystem::Collides(Colidable & lhs, Colidable & rhs){
+	sf::Rect<float> rect = lhs.getRect();
+	sf::Rect<float> other = rhs.getRect();
+	return Collides(rect, other);
+}
 
+sf::Rect<float> CollisionSystem::Collides(sf::Rect<float> rect, sf::Rect<float> other){
 	// Rectangles with negative dimensions are allowed, so we must handle them correctly
 
 	// Compute the min and max of the first rectangle on both axes
@@ -175,7 +119,7 @@ sf::Rect<float> CollisionSystem::Collides(Colidable::Handle & lhs, Colidable::Ha
 	}
 	else
 	{
-		return sf::Rect<float>(0,0,0,0);
+		return sf::Rect<float>(0, 0, 0, 0);
 	}
 }
 

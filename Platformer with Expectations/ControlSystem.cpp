@@ -22,6 +22,7 @@ bool ControlSystem::checkPossibleMovement(sf::Keyboard::Key key, EntityManager &
 		if (sf::Keyboard::Key::D == key && !ent.getComponent<Colidable>()->getCollision(Colidable::CollisionSide::right)){
 			return true;
 		}
+		std::cout << "false movement" << std::endl;
 		return false;
 
 	}
