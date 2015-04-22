@@ -8,10 +8,10 @@
 struct Colidable : public Component<Colidable>
 {
 	enum CollisionSide{
-		left = 0,
-		right = 1,
-		up = 2, 
-		down = 3,
+		left = 1,
+		right = 2,
+		up = 4, 
+		down = 8,
 	};
 
 	Colidable(){}
@@ -36,6 +36,12 @@ struct Colidable : public Component<Colidable>
 
 	void setCollision(bool col, CollisionSide side){
 		map[side] = col;
+		std::cout << map << std::endl;
+	}
+
+	void reset(){
+		std::cout << "reset" << std::endl;
+		map.reset();
 	}
 
 	bool getCollision(CollisionSide side){

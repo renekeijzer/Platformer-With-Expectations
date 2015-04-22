@@ -5,11 +5,19 @@
 
 void CollisionSystem::update(EntityManager & entities, EventManager & events, double dt){
 	sf::Rect<float> * CollisionRect = new sf::Rect<float>();
+
 	for (Entity & ent : entities.withComponents<UserControlable, PhysicalComponent>()){
 		for (Entity & oth: entities.withComponents<Colidable>()){
-			
-			if (ent.getComponent<PhysicalComponent>()->willColide(oth, CollisionRect)){
-				ent.getComponent<PhysicalComponent>()->fixMovement(*CollisionRect);
+			if (ent != oth){
+				if (ent.getComponent<PhysicalComponent>()->willColide(oth, CollisionRect)){
+					ent.getComponent<PhysicalComponent>()->fixMovement(*CollisionRect);
+					if (keybuffer.size() > 0){ 
+						auto key = keybuffer.peek();
+						keybuffer.remove(key);
+					}
+				}else{
+					//ent.getComponent<Colidable>()->reset();
+				}
 			}
 		}
 	}
@@ -20,7 +28,7 @@ void CollisionSystem::update(EntityManager & entities, EventManager & events, do
 			if (ent != other){
 				Colidable::Handle & otherHandle = other.getComponent<Colidable>();
 
-				if (Collides(ent, other).width > 0 && Collides(ent,other).height > 0){
+				if (PhysicalComponent::Collides(ent, other).width > 0 && PhysicalComponent::Collides(ent,other).height > 0){
 					events.emit<CollisionEvent>(ent, other);
 				}
 			}
@@ -72,56 +80,6 @@ Colidable::Handle CollisionSystem::predicate(Entity & ent){
 }
 
 
-sf::Rect<float> CollisionSystem::Collides(Entity & lhs, Entity & rhs){
-	Colidable::Handle lhsColidable = lhs.getComponent<Colidable>();
-	Colidable::Handle rhsColidable = rhs.getComponent<Colidable>();
-	
-	return Collides(lhsColidable, rhsColidable);
-
-}
-
-sf::Rect<float> CollisionSystem::Collides(Colidable::Handle & lhs, Colidable::Handle & rhs){
-	sf::Rect<float> rect = lhs->getRect();
-	sf::Rect<float> other = rhs->getRect();
-	return Collides(rect, other);
-}
-sf::Rect<float> CollisionSystem::Collides(Colidable & lhs, Colidable & rhs){
-	sf::Rect<float> rect = lhs.getRect();
-	sf::Rect<float> other = rhs.getRect();
-	return Collides(rect, other);
-}
-
-sf::Rect<float> CollisionSystem::Collides(sf::Rect<float> rect, sf::Rect<float> other){
-	// Rectangles with negative dimensions are allowed, so we must handle them correctly
-
-	// Compute the min and max of the first rectangle on both axes
-	float r1MinX = std::min<float>(rect.left, rect.left + rect.width);
-	float r1MaxX = std::max<float>(rect.left, rect.left + rect.width);
-	float r1MinY = std::min<float>(rect.top, rect.top + rect.height);
-	float r1MaxY = std::max<float>(rect.top, rect.top + rect.height);
-
-	// Compute the min and max of the second rectangle on both axes
-	float r2MinX = std::min<float>(other.left, other.left + other.width);
-	float r2MaxX = std::max<float>(other.left, other.left + other.width);
-	float r2MinY = std::min<float>(other.top, other.top + other.height);
-	float r2MaxY = std::max<float>(other.top, other.top + other.height);
-
-	// Compute the intersection boundaries
-	float interLeft = std::max<float>(r1MinX, r2MinX);
-	float interTop = std::max<float>(r1MinY, r2MinY);
-	float interRight = std::min<float>(r1MaxX, r2MaxX);
-	float interBottom = std::min<float>(r1MaxY, r2MaxY);
-
-	// If the intersection is valid (positive non zero area), then there is an intersection
-	if ((interLeft < interRight) && (interTop < interBottom))
-	{
-		return sf::Rect<float>(interTop, interLeft, interRight - interLeft, interBottom - interTop);
-	}
-	else
-	{
-		return sf::Rect<float>(0, 0, 0, 0);
-	}
-}
 
 CollisionSystem::~CollisionSystem()
 {

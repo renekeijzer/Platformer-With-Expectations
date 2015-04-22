@@ -96,12 +96,16 @@ void MovementSystem::updateMovement(Entity & id){
 			switch (keybuffer.peek().second)
 			{
 			case PWE::PlayerAction::strafeLeft:
-				velo.x = (velo.x > movHandle->getMaxVelocity().x * -1 ?
-					velo.x + movHandle->speed.x * -1 : movHandle->getMaxVelocity().x*-1);
+				if (!id.getComponent<Colidable>()->getCollision(Colidable::CollisionSide::left)){
+					velo.x = (velo.x > movHandle->getMaxVelocity().x * -1 ?
+						velo.x + movHandle->speed.x * -1 : movHandle->getMaxVelocity().x*-1);
+				}
 			break;
 			case PWE::PlayerAction::strafeRight:
-				velo.x = (velo.x > movHandle->getMaxVelocity().x * 1 ?
-					velo.x + movHandle->speed.x * 1 : movHandle->getMaxVelocity().x);
+				if (!id.getComponent<Colidable>()->getCollision(Colidable::CollisionSide::right)){
+					velo.x = (velo.x > movHandle->getMaxVelocity().x * 1 ?
+						velo.x + movHandle->speed.x * 1 : movHandle->getMaxVelocity().x);
+				}
 				break;
 			case PWE::PlayerAction::duck:
 				break;

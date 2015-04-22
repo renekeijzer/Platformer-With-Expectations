@@ -11,7 +11,7 @@ EntityFactory* EntityFactory::get(EntityManager& manager){
 }
 void EntityFactory::CreatePlayer(sf::Vector2f position){
 	Entity player = manager.createEntity();
-
+	std::cout << "Created Player!" << std::endl;
 	player.addComponent<Focussable>(1, true);
 	player.addComponent<Movable>(position.x, position.y, 0,0);
 	player.addComponent<Flag>(PWE::EntityTypes::Player);
@@ -29,6 +29,7 @@ void EntityFactory::CreatePlayer(sf::Vector2f position){
 
 	sf::Rect<float> cRect(position, sf::Vector2f(32,32));
 	player.addComponent<Colidable>(cRect);
+	std::cout << player.getComponent<Colidable>().get() << std::endl;
 	player.addComponent<PhysicalComponent>(player.getComponent<Colidable>(), player.getComponent<Movable>());
 }
 
