@@ -15,8 +15,12 @@ void CollisionSystem::update(EntityManager & entities, EventManager & events, do
 						auto key = keybuffer.peek();
 						keybuffer.remove(key);
 					}
-				}else{
-					//ent.getComponent<Colidable>()->reset();
+				}
+				else
+				{
+					if (ent.getComponent<Movable>()->getVelocity().y == 0){
+						ent.getComponent<Gravity>()->setFalling(true);
+					}
 				}
 			}
 		}

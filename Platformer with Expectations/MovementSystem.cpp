@@ -4,62 +4,14 @@
 void MovementSystem::configure(EventManager & event){
 	event.subscribe<CollisionEvent>(*this);
 }
-void MovementSystem::handleCollisions(EntityManager & entities){
-	while (!colidedEntities.empty() ){
-		auto & colidedPair = colidedEntities.top();
-
-		auto lhs = entities.get(colidedPair.first);
-		auto rhs = entities.get(colidedPair.second);
-		
-		Flag::Handle & rhsFlag = rhs.getComponent<Flag>();
-		Flag::Handle & lhsFlag = lhs.getComponent<Flag>();
-
-		switch (lhsFlag->type){
-		case PWE::EntityTypes::Player:
-			if (rhsFlag->type == PWE::EntityTypes::Tile){
-				Colidable::Handle & lhsColidable = lhs.getComponent<Colidable>();
-				Colidable::Handle & rhsColidable = rhs.getComponent<Colidable>();
-
-				if (lhsColidable->getPosition().y <= rhsColidable->getPosition().y){
-					Gravity::Handle & lhsGravity = lhs.getComponent<Gravity>();
-					Movable::Handle & lhsMovable = lhs.getComponent<Movable>();
-
-					
-					float yDif = rhsColidable->getPosition().y - (lhsColidable->getPosition().y + lhsColidable->getWidth());
-					
-					lhsMovable->setPosition(lhsMovable->getPosition().x, lhsMovable->getPosition().y + yDif);
-					updateCollision(lhs);
-					
-					
-					lhsMovable->setVelocity(lhsMovable->getVelocity().x, 0);
-					lhsGravity->setFalling(false);
-					lhsGravity->setJumping(false);
-					
-				}
-			
-
-			}
-			break;
-		case PWE::EntityTypes::Tile:
-			std::cout << "Was Tile collision";
-			break;
-		default:
-			std::cerr << "UNKNOWN ENTITY TYPE SOMETHING WENT WRONG";
-		}
-
-		colidedEntities.pop();
-		
-	}
-}
 
 void MovementSystem::update(EntityManager & entities, EventManager & events, double dt){
 	for(Entity & entity : entities.withComponents<UserControlable>())
 	{
 		updateMovement(entity);
 	}
-	//handleCollisions(entities);
 	for (Entity & ent : entities.withComponents<Movable>()){
-		//updateGravity(ent);
+		updateGravity(ent);
 		updateCollision(ent);
 		updatePosition(ent);
 		
@@ -97,12 +49,16 @@ void MovementSystem::updateMovement(Entity & id){
 			{
 			case PWE::PlayerAction::strafeLeft:
 				if (!id.getComponent<Colidable>()->getCollision(Colidable::CollisionSide::left)){
+
+					id.getComponent<Colidable>()->setCollision(false, Colidable::CollisionSide::right);
 					velo.x = (velo.x > movHandle->getMaxVelocity().x * -1 ?
 						velo.x + movHandle->speed.x * -1 : movHandle->getMaxVelocity().x*-1);
 				}
 			break;
 			case PWE::PlayerAction::strafeRight:
 				if (!id.getComponent<Colidable>()->getCollision(Colidable::CollisionSide::right)){
+
+					id.getComponent<Colidable>()->setCollision(false, Colidable::CollisionSide::left);
 					velo.x = (velo.x > movHandle->getMaxVelocity().x * 1 ?
 						velo.x + movHandle->speed.x * 1 : movHandle->getMaxVelocity().x);
 				}

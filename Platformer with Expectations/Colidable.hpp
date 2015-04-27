@@ -8,10 +8,10 @@
 struct Colidable : public Component<Colidable>
 {
 	enum CollisionSide{
-		left = 1,
-		right = 2,
-		up = 4, 
-		down = 8,
+		left = 0,
+		right = 1,
+		up = 2, 
+		down = 3,
 	};
 
 	Colidable(){}

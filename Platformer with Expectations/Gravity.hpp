@@ -6,6 +6,8 @@ public:
 	float getFalling(){ return fallingSpeed; }
 	bool isFalling(){ return falling; }
 
+
+
 	bool isJumping(){ return jumping; }
 	void setJumping(bool js){ jumping = js; }
 

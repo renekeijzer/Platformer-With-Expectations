@@ -8,9 +8,7 @@ void ControlSystem::update(EntityManager & entities, EventManager & events, doub
 	for(auto key : keys->getMap())
 	{
 		if (sf::Keyboard::isKeyPressed(key.first)){
-			if (checkPossibleMovement(key.first, entities)){
 				keybuffer.add(key);
-			}
 		}
 	}
 }

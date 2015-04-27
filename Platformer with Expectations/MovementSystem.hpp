@@ -24,7 +24,6 @@ public:
 	~MovementSystem();
 private:
 
-	void handleCollisions(EntityManager & entities);
 	void updateCollision(Entity & id);
 	void updateGravity(Entity & id);
 	void updatePosition(Entity & id);

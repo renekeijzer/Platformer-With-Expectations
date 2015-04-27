@@ -4,7 +4,7 @@
 #include "CollisionSystem.hpp"
 
 struct PhysicalComponent : Component<PhysicalComponent>{
-	PhysicalComponent(Colidable::Handle & col, Movable::Handle & mov): collision(col.get()), movable(mov.get()){
+	PhysicalComponent(Colidable::Handle & col, Movable::Handle & mov, Gravity::Handle & gr): collision(col.get()), movable(mov.get()), grav(gr.get()){
 	}
 	
 	bool willColide(Entity & ent, sf::Rect<float> * cR){
@@ -21,6 +21,10 @@ struct PhysicalComponent : Component<PhysicalComponent>{
 		sf::Rect<float> otherRect = ent.getComponent<Colidable>()->getRect();
 		sf::Rect<float> collisionRect = Collides(next, otherRect);
 		if ((collisionRect.width == 0 && collisionRect.height == 0) || (collisionRect.width == 32 && collisionRect.height == 32)){
+			cR->width = 0; 
+			cR->height = 0;
+			cR->left = 0;
+			cR->top = 0;
 			return false;
 		}
 		else{
@@ -28,6 +32,7 @@ struct PhysicalComponent : Component<PhysicalComponent>{
 			cR->height = collisionRect.height;
 			cR->top = collisionRect.top;
 			cR->left = collisionRect.left;
+			std::cout << "Will colide @ cr: " << cR->width << ", " << cR->height << "(" << cR->left << "," << cR->top << ")" << "With velo << " << velo.x << " - " << velo.y << std::endl;
 			return true;
 		}
 	}
@@ -36,24 +41,58 @@ struct PhysicalComponent : Component<PhysicalComponent>{
 		sf::Vector2f velo = movable->getVelocity();
 		sf::Vector2f position = movable->getPosition();
 		sf::Rect<float> currentCr = collision->getRect();
-		
-		if (velo.x > 0 && cR.left > position.x){
-			velo.x = 0;
+		if (grav->isFalling()){
+			if (cR.height < 32){
+				if (velo.y > 0){
+					if (velo.y - cR.height >= 0){
+						velo.y -= cR.height;
+					}
+					else{
+						velo.y = 0;
+					}
+					grav->setFalling(false);
+					velo.y = 0;
+					collision->setPosition(collision->getPosition().x, collision->getPosition().y - cR.height);
+					movable->setPosition(movable->getPosition().x, movable->getPosition().y - cR.height);
+				}
+			}
+		}
+
+		if (velo.x > 0){
+			if (velo.x - cR.width >= 0)
+			{
+				velo.x -= cR.width;
+			}
+			else{
+				velo.x = 0;
+			}
 			collision->setCollision(true, Colidable::CollisionSide::right);
 			collision->setCollision(false, Colidable::CollisionSide::left);
 		}
-		else if (velo.x < 0 && cR.left < position.x){
-			velo.x = 0;
+		
+		if (velo.x < 0){
+			if (velo.x + cR.width <= 0)
+			{
+				velo.x += cR.width;
+			}
+			else{
+				velo.x = 0;
+			}
 
 			collision->setCollision(false, Colidable::CollisionSide::right);
 			collision->setCollision(true, Colidable::CollisionSide::left);
 		}
 
-		if (velo.y < 0){
+		if (velo.x == 0 && velo.y == 0){
+			if (cR.top > collision->getRect().left){
+				collision->setPosition(collision->getPosition().x - cR.width, collision->getPosition().y);
+				movable->setPosition(movable->getPosition().x - cR.width, movable->getPosition().y);
+			}
+			else if(cR.top < collision->getRect().left){
+				collision->setPosition(collision->getPosition().x + cR.width, collision->getPosition().y);
+				movable->setPosition(movable->getPosition().x + cR.width, movable->getPosition().y);
+			}
 		}
-		else if (velo.y>0){
-		}
-
 		movable->setVelocity(velo);
 	}
 	static sf::Rect<float> Collides(Entity & lhs, Entity & rhs){
@@ -107,9 +146,7 @@ struct PhysicalComponent : Component<PhysicalComponent>{
 private:
 	Colidable* collision;
 	Movable* movable;
-
-	sf::Rect<float> colides(){
-	}
+	Gravity* grav;
 
 };
 
